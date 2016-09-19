@@ -66,16 +66,4 @@ public class PateScript : MonoBehaviour {
         Debug.Log("SET TARGET " + pos);
         target_pos = pos;
     }
-
-    void OnTriggerEnter2D(Collider2D collider)
-    {
-        Debug.Log("TRIGGER WARNING");
-    }
-
-    /*
-    void SetTargetObject(GameObject obj)
-    {
-        target_object = obj;
-    }
-    */
 }
