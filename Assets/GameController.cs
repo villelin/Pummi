@@ -11,6 +11,11 @@ public class GameController : MonoBehaviour {
     private GameObject speech_target;
     private float time;
 
+    private GameObject parkbg;
+    private GameObject stationbg;
+
+    int sw = 0;
+
 
 	// Use this for initialization
 	void Start ()
@@ -22,13 +27,15 @@ public class GameController : MonoBehaviour {
         item_map.Add(GameObject.Find("Collect2"), new GameItem("Apple 2"));
         item_map.Add(GameObject.Find("Collect3"), new GameItem("Apple 3"));
         item_map.Add(GameObject.Find("Collect4"), new GameItem("Apple 4"));
+		item_map.Add(GameObject.Find("Andrei"), new GameItem("Andrei"));
+		item_map.Add(GameObject.Find("Lissu"), new GameItem("Lissu"));
 
         pate = GameObject.Find("Pate");
 
         Debug.Log(item_map);
 
         Text cashtext = GameObject.Find("Cash").GetComponent<Text>();
-        cashtext.text = "$0";
+        cashtext.text = "€0";
 
 
         Text speechtext = GameObject.Find("SpeechText").GetComponent<Text>();
@@ -43,7 +50,25 @@ public class GameController : MonoBehaviour {
         speech_target = null;
 
         time = 0.0f;
+
+		parkbg = GameObject.Find("ParkBG");
+		stationbg = GameObject.Find("StationBG");
+		SwitchBG(0);
     }
+
+	void SwitchBG(int bg)
+	{
+		if (bg == 0)
+		{
+			parkbg.SetActive(false);
+			stationbg.SetActive(true);
+		}
+		else
+		{
+			parkbg.SetActive(true);
+			stationbg.SetActive(false);
+		}
+	}
 	
 	// Update is called once per frame
 	void Update ()
@@ -63,6 +88,9 @@ public class GameController : MonoBehaviour {
                 }
             }
             time = 0.0f;
+
+			SwitchBG(sw % 2);
+            sw++;
         }
 
         // if mouse was clicked, set a target position for Pate
@@ -131,7 +159,7 @@ public class GameController : MonoBehaviour {
 
             // update cash
             Text cashtext = GameObject.Find("Cash").GetComponent<Text>();
-            cashtext.text = "$" + player.GetCash();
+            cashtext.text = "€" + player.GetCash();
         }
     }
 
