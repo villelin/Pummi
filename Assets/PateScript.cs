@@ -55,15 +55,17 @@ public class PateScript : MonoBehaviour {
         transform.localRotation = Quaternion.Euler(0, 0, walk_rot);
 
         //renderer.color = new Color(x, 1.0f - x, Mathf.Abs(y));
-        if (direction.x < 0.0f)
-            renderer.flipX = false;
-        else
-            renderer.flipX = true;
     }
 
     void SetTarget(Vector2 pos)
     {
         Debug.Log("SET TARGET " + pos);
         target_pos = pos;
-    }
+
+		Vector2 direction = target_pos - current_pos;
+		if (direction.x < 0.0f)
+			renderer.flipX = false;
+		else
+			renderer.flipX = true;
+	}
 }
