@@ -13,6 +13,10 @@ public class GameController : MonoBehaviour {
 
     private GameObject parkbg;
     private GameObject stationbg;
+	private GameObject metro;
+	private GameObject lissu;
+	private GameObject andrei;
+	private GameObject bush;
 
     int sw = 0;
 
@@ -29,6 +33,7 @@ public class GameController : MonoBehaviour {
         item_map.Add(GameObject.Find("Collect4"), new GameItem("Apple 4"));
 		item_map.Add(GameObject.Find("Andrei"), new GameItem("Andrei"));
 		item_map.Add(GameObject.Find("Lissu"), new GameItem("Lissu"));
+		item_map.Add(GameObject.Find("Bush"), new GameItem("Bush"));
 
         pate = GameObject.Find("Pate");
 
@@ -53,20 +58,40 @@ public class GameController : MonoBehaviour {
 
 		parkbg = GameObject.Find("ParkBG");
 		stationbg = GameObject.Find("StationBG");
-		SwitchBG(0);
+		metro = GameObject.Find("Metro");
+		lissu = GameObject.Find("Lissu");
+		andrei = GameObject.Find("Andrei");
+		bush = GameObject.Find("Bush");
+
+		ChangeLocation(0);
     }
 
-	void SwitchBG(int bg)
+	// Change current location, hides/shows objects based on location
+	// 0 = station, 1 = park
+	void ChangeLocation(int location)
 	{
-		if (bg == 0)
+		switch (location)
 		{
-			parkbg.SetActive(false);
-			stationbg.SetActive(true);
-		}
-		else
-		{
-			parkbg.SetActive(true);
-			stationbg.SetActive(false);
+			case 0:			// station
+				{
+					parkbg.SetActive(false);		// hide park background
+					stationbg.SetActive(true);      // show station background
+					metro.SetActive(true);          // show metro
+					lissu.SetActive(true);          // show lissu
+					andrei.SetActive(true);         // show andrei
+					bush.SetActive(false);			// hide bush
+					break;
+				}
+			case 1:			// park
+				{
+					parkbg.SetActive(true);			// show park background
+					stationbg.SetActive(false);     // hide station background
+					metro.SetActive(false);         // hide metro
+					lissu.SetActive(false);         // hide lissu
+					andrei.SetActive(false);        // hide andrei
+					bush.SetActive(true);			// show bush
+					break;
+				}
 		}
 	}
 	
@@ -89,7 +114,7 @@ public class GameController : MonoBehaviour {
             }
             time = 0.0f;
 
-			SwitchBG(sw % 2);
+			ChangeLocation(sw % 2);
             sw++;
         }
 
