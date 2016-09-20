@@ -210,8 +210,6 @@ public class GameController : MonoBehaviour
                 // don't move if we're actually clicking an UI item
                 if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
                 {
-                    float x = Input.mousePosition.x;
-                    float y = Input.mousePosition.y;
                     Vector3 tp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     pate.SendMessage("SetTarget", new Vector2(tp.x, tp.y));
                 }
@@ -249,6 +247,18 @@ public class GameController : MonoBehaviour
                         //Loot(go);
                         speech.transform.position = Camera.main.WorldToScreenPoint(go.transform.position - new Vector3(0, -80, 0));
                         speech.SetActive(true);
+
+                        int type = item_type[go];
+
+                        Text speech_text = GameObject.Find("SpeechText").GetComponent<Text>();
+
+                        switch (type)
+                        {
+                            case 1:     speech_text.text = "Steal!"; break;
+                            case 2:     speech_text.text = "FIGHT!"; break;
+                            case 3:     speech_text.text = "Beg"; break;
+                            case 4:     speech_text.text = "Search"; break;
+                        }      
 
                         speech_target = go;
                         break;
