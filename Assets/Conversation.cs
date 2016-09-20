@@ -21,6 +21,8 @@ public class Conversation : MonoBehaviour
 
     void DoneButtonClicked()
     {
+        Persistence.instance.cash += 100;
+
         SceneManager.LoadScene("basescene");
     }
 }

@@ -69,8 +69,9 @@ public class GameController : MonoBehaviour
 
         Debug.Log(item_map);
 
+        // show cash
         Text cashtext = GameObject.Find("Cash").GetComponent<Text>();
-        cashtext.text = "€0";
+        cashtext.text = "€" + Persistence.instance.cash;
 
 
         Text speechtext = GameObject.Find("SpeechText").GetComponent<Text>();

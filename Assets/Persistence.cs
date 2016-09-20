@@ -8,6 +8,7 @@ public class Persistence : MonoBehaviour
     public static Persistence instance;
     public Vector2 pate_position;
     public int location;
+    public int cash;
 
     void Awake()
     {
