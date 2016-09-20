@@ -38,6 +38,7 @@ public class PateScript : MonoBehaviour
         {
             direction.Normalize();
             direction *= speed;
+            direction.y *= 0.3f;
 
             walk_offset = Mathf.Abs(Mathf.Sin(angrad)) * 15.0f;
             walk_rot = 0.0f - Mathf.Sin(angrad) * 20.0f;
