@@ -21,8 +21,6 @@ public class Conversation : MonoBehaviour
 
     void DoneButtonClicked()
     {
-        Debug.Log("clicketh");
-
         SceneManager.LoadScene("basescene");
     }
 }
