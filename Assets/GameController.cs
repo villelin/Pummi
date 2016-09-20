@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
-public class GameController : MonoBehaviour {
+public class GameController : MonoBehaviour
+{
     private Player player;
     private Dictionary<GameObject, GameItem> item_map;
     private GameObject pate;
@@ -219,6 +221,9 @@ public class GameController : MonoBehaviour {
             // update cash
             Text cashtext = GameObject.Find("Cash").GetComponent<Text>();
             cashtext.text = "€" + player.GetCash();
+
+            // talk
+            SceneManager.LoadScene("conversation");
         }
     }
 

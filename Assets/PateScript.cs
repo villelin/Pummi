@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PateScript : MonoBehaviour {
+public class PateScript : MonoBehaviour
+{
     SpriteRenderer renderer;
     Vector2 target_pos;
     Vector2 current_pos;
