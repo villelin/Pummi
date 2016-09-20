@@ -8,7 +8,7 @@ public class PateScript : MonoBehaviour {
     GameObject target_object;
     GameObject game_controller;
     float angle;
-    float speed = 5.0f;
+    const float speed = 5.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -68,4 +68,10 @@ public class PateScript : MonoBehaviour {
 		else
 			renderer.flipX = true;
 	}
+
+    void SetPosition(Vector2 pos)
+    {
+        current_pos = pos;
+        target_pos = current_pos;
+    }
 }

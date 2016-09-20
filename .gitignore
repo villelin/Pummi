@@ -4,3 +4,4 @@ Temp/
 # Visual Studion kamat
 *.sln
 *.csproj
+.vs/

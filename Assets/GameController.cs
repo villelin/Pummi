@@ -19,11 +19,23 @@ public class GameController : MonoBehaviour {
 	private GameObject bush;
 
     int sw = 0;
+    int current_location;
+
+    bool transition_active;
+    int transition_target;
+    float transition_in_timer;
+    float transition_out_timer;
+    float fade_level;
 
 
 	// Use this for initialization
 	void Start ()
     {
+        transition_active = false;
+        transition_in_timer = 0;
+        transition_out_timer = 0;
+        fade_level = 0.0f;
+
         player = new Player();
         item_map = new Dictionary<GameObject, GameItem>();
 
@@ -70,6 +82,10 @@ public class GameController : MonoBehaviour {
 	// 0 = station, 1 = park
 	void ChangeLocation(int location)
 	{
+        current_location = location;
+
+        pate.SendMessage("SetPosition", new Vector2(400, 140));
+
 		switch (location)
 		{
 			case 0:			// station
@@ -100,62 +116,80 @@ public class GameController : MonoBehaviour {
     {
         time += Time.deltaTime;
 
-        // respawn thing every 5 seconds
-        if (time >= 5.0f)
+        if (transition_in_timer > 0)
         {
+            transition_in_timer -= Time.deltaTime;
+
+            if (transition_in_timer <= 0.0f)
+            {
+                ChangeLocation(transition_target);
+                transition_out_timer = 1.0f;
+            }
+
+            fade_level = Mathf.Max(1.0f - transition_in_timer, 0.0f);
+        }
+        if (transition_out_timer > 0)
+        {
+            transition_out_timer -= Time.deltaTime;
+            if (transition_out_timer <= 0.0f)
+                transition_active = false;
+
+            fade_level = Mathf.Max(transition_out_timer, 0.0f);
+            fade_level = Mathf.Min(transition_out_timer, 1.0f);
+        }
+
+        if (!transition_active)
+        {
+            // if mouse was clicked, set a target position for Pate
+            if (Input.GetMouseButtonUp(0))
+            {
+                Debug.Log("clicked");
+
+                // don't move if we're actually clicking an UI item
+                if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+                {
+                    float x = Input.mousePosition.x;
+                    float y = Input.mousePosition.y;
+                    pate.SendMessage("SetTarget", new Vector2(x, y));
+                }
+            }
+
+            Vector3 patepos = pate.transform.position;
+
+            speech.SetActive(false);
+            speech_target = null;
+
+            if (current_location == 0 && patepos.x > 680.0f)
+            {
+                StartTransition(1);
+                //ChangeLocation(1);
+            }
+            else if (current_location == 1 && patepos.x < 40.0f)
+            {
+                //ChangeLocation(0);
+                StartTransition(0);
+            }
+
+            // go through all interactable objects and check if we're close to them
             foreach (KeyValuePair<GameObject, GameItem> obj in item_map)
             {
                 GameObject go = obj.Key;
-                if (!go.activeSelf)
+                // only handle objects that are active
+                if (go.activeSelf)
                 {
-                    go.SetActive(true);
-                    break;
-                }
-            }
-            time = 0.0f;
+                    Vector3 gopos = go.transform.position;
 
-			ChangeLocation(sw % 2);
-            sw++;
-        }
+                    Vector3 diff = gopos - patepos;
+                    // loot if we're close enough
+                    if (diff.magnitude < 50.0f)
+                    {
+                        //Loot(go);
+                        speech.transform.position = go.transform.position - new Vector3(0, -80, 0);
+                        speech.SetActive(true);
 
-        // if mouse was clicked, set a target position for Pate
-        if (Input.GetMouseButtonUp(0))
-        {
-            Debug.Log("clicked");
-
-            // don't move if we're actually clicking an UI item
-            if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
-            {
-                float x = Input.mousePosition.x;
-                float y = Input.mousePosition.y;
-                pate.SendMessage("SetTarget", new Vector2(x, y));
-            }
-        }
-
-        Vector3 patepos = pate.transform.position;
-
-        speech.SetActive(false);
-        speech_target = null;
-
-        // go through all interactable objects and check if we're close to them
-        foreach (KeyValuePair<GameObject, GameItem> obj in item_map)
-        {
-            GameObject go = obj.Key;
-            // only handle objects that are active
-            if (go.activeSelf)
-            {
-                Vector3 gopos = go.transform.position;
-
-                Vector3 diff = gopos - patepos;
-                // loot if we're close enough
-                if (diff.magnitude < 50.0f)
-                {
-                    //Loot(go);
-                    speech.transform.position = go.transform.position - new Vector3(0, -80, 0);
-                    speech.SetActive(true);
-
-                    speech_target = go;
-                    break;
+                        speech_target = go;
+                        break;
+                    }
                 }
             }
         }
@@ -197,5 +231,19 @@ public class GameController : MonoBehaviour {
             // reset the respawn timer
             time = 0.0f;
         }
+    }
+
+    void StartTransition(int location)
+    {
+        transition_target = location;
+        transition_in_timer = 1.0f;
+        transition_active = true;
+    }
+
+    void OnGUI()
+    {
+        GUI.color = new Color(0, 0, 0, fade_level);
+        GUI.depth = -1000;
+        GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Texture2D.whiteTexture);
     }
 }
