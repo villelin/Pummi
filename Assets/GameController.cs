@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
 {
     private Player player;
     private Dictionary<GameObject, GameItem> item_map;
+    private Dictionary<GameObject, int> item_type;
     private GameObject pate;
     private GameObject speech;
     private GameObject speech_target;
@@ -41,13 +42,28 @@ public class GameController : MonoBehaviour
         player = new Player();
         item_map = new Dictionary<GameObject, GameItem>();
 
-        item_map.Add(GameObject.Find("Collect1"), new GameItem("Apple 1"));
-        item_map.Add(GameObject.Find("Collect2"), new GameItem("Apple 2"));
-        item_map.Add(GameObject.Find("Collect3"), new GameItem("Apple 3"));
-        item_map.Add(GameObject.Find("Collect4"), new GameItem("Apple 4"));
 		item_map.Add(GameObject.Find("Andrei"), new GameItem("Andrei"));
 		item_map.Add(GameObject.Find("Lissu"), new GameItem("Lissu"));
 		item_map.Add(GameObject.Find("Bush"), new GameItem("Bush"));
+        item_map.Add(GameObject.Find("Pullo1"), new GameItem("Pullo1"));
+        item_map.Add(GameObject.Find("Pullo2"), new GameItem("Pullo2"));
+        item_map.Add(GameObject.Find("Pullo3"), new GameItem("Pullo3"));
+        item_map.Add(GameObject.Find("Pullo4"), new GameItem("Pullo4"));
+        item_map.Add(GameObject.Find("Pullo5"), new GameItem("Pullo5"));
+        item_map.Add(GameObject.Find("Pullo6"), new GameItem("Pullo6"));
+        item_map.Add(GameObject.Find("Pullo7"), new GameItem("Pullo7"));
+
+        item_type = new Dictionary<GameObject, int>();
+        item_type.Add(GameObject.Find("Pullo1"), 1);
+        item_type.Add(GameObject.Find("Pullo2"), 1);
+        item_type.Add(GameObject.Find("Pullo3"), 1);
+        item_type.Add(GameObject.Find("Pullo4"), 1);
+        item_type.Add(GameObject.Find("Pullo5"), 1);
+        item_type.Add(GameObject.Find("Pullo6"), 1);
+        item_type.Add(GameObject.Find("Pullo7"), 1);
+        item_type.Add(GameObject.Find("Andrei"), 2);
+        item_type.Add(GameObject.Find("Lissu"), 3);
+        item_type.Add(GameObject.Find("Bush"), 4);
 
         pate = GameObject.Find("Pate");
 
@@ -95,9 +111,30 @@ public class GameController : MonoBehaviour
 					parkbg.SetActive(false);		// hide park background
 					stationbg.SetActive(true);      // show station background
 					metro.SetActive(true);          // show metro
-					lissu.SetActive(true);          // show lissu
-					andrei.SetActive(true);         // show andrei
-					bush.SetActive(false);			// hide bush
+
+                    foreach (KeyValuePair<GameObject, int> obj in item_type)
+                    {
+                        switch (obj.Value)
+                        {
+                            case 1:     // pullo
+                                obj.Key.SetActive(false);
+                                break;
+                            case 2:     // Andrei
+                                obj.Key.SetActive(true);
+                                break;
+                            case 3:     // Lissu
+                                obj.Key.SetActive(true);
+                                break;
+                            case 4:     // Bush
+                                obj.Key.SetActive(false);
+                                break;
+
+                            default:
+                                obj.Key.SetActive(false);
+                                break;
+                        }
+                    }
+
 					break;
 				}
 			case 1:			// park
@@ -105,10 +142,33 @@ public class GameController : MonoBehaviour
 					parkbg.SetActive(true);			// show park background
 					stationbg.SetActive(false);     // hide station background
 					metro.SetActive(false);         // hide metro
-					lissu.SetActive(false);         // hide lissu
-					andrei.SetActive(false);        // hide andrei
-					bush.SetActive(true);			// show bush
-					break;
+
+                    foreach (KeyValuePair<GameObject, int> obj in item_type)
+                    {
+                        switch (obj.Value)
+                        {
+                            case 1:     // pullo
+                                if (Random.Range(0.0f, 100.0f) < 20.0f)
+                                    obj.Key.SetActive(true);
+                                else
+                                    obj.Key.SetActive(false);
+                                break;
+                            case 2:     // Andrei
+                                obj.Key.SetActive(false);
+                                break;
+                            case 3:     // Lissu
+                                obj.Key.SetActive(false);
+                                break;
+                            case 4:     // Bush
+                                obj.Key.SetActive(true);
+                                break;
+
+                            default:
+                                obj.Key.SetActive(false);
+                                break;
+                        }
+                    }
+                    break;
 				}
 		}
 	}
