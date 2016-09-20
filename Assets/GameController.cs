@@ -152,7 +152,8 @@ public class GameController : MonoBehaviour
                 {
                     float x = Input.mousePosition.x;
                     float y = Input.mousePosition.y;
-                    pate.SendMessage("SetTarget", new Vector2(x, y));
+                    Vector3 tp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    pate.SendMessage("SetTarget", new Vector2(tp.x, tp.y));
                 }
             }
 
@@ -186,7 +187,6 @@ public class GameController : MonoBehaviour
                     if (diff.magnitude < 50.0f)
                     {
                         //Loot(go);
-                        speech.transform.position = go.transform.position - new Vector3(0, -80, 0);
                         speech.SetActive(true);
 
                         speech_target = go;

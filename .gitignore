@@ -1,5 +1,8 @@
 Library/
 Temp/
+pummi_Data/
+
+*.exe
 
 # Visual Studion kamat
 *.sln
