@@ -77,7 +77,9 @@ public class GameController : MonoBehaviour
 		andrei = GameObject.Find("Andrei");
 		bush = GameObject.Find("Bush");
 
-		ChangeLocation(0);
+        ChangeLocation(0);
+
+        LoadGlobalState(); 
     }
 
 	// Change current location, hides/shows objects based on location
@@ -85,8 +87,6 @@ public class GameController : MonoBehaviour
 	void ChangeLocation(int location)
 	{
         current_location = location;
-
-        pate.SendMessage("SetPosition", new Vector2(400, 140));
 
 		switch (location)
 		{
@@ -223,6 +223,7 @@ public class GameController : MonoBehaviour
             cashtext.text = "€" + player.GetCash();
 
             // talk
+            SaveGlobalState();
             SceneManager.LoadScene("conversation");
         }
     }
@@ -250,5 +251,21 @@ public class GameController : MonoBehaviour
         GUI.color = new Color(0, 0, 0, fade_level);
         GUI.depth = -1000;
         GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Texture2D.whiteTexture);
+    }
+
+    void LoadGlobalState()
+    {
+        Vector2 pate_pos = Persistence.instance.pate_position;
+        Debug.Log("load pos " + pate_pos);
+        pate.SendMessage("SetPosition", pate_pos);
+
+        ChangeLocation(Persistence.instance.location);
+    }
+
+    void SaveGlobalState()
+    {
+        Vector2 pate_pos = pate.transform.position;
+        Persistence.instance.pate_position = pate_pos;
+        Persistence.instance.location = current_location;
     }
 }

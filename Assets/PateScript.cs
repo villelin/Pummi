@@ -17,8 +17,6 @@ public class PateScript : MonoBehaviour
         game_controller = GameObject.Find("GameController");
         angle = 0.0f;
 
-        target_pos = new Vector2(transform.position.x, transform.position.y);
-        current_pos = new Vector2(transform.position.x, transform.position.y);
         target_object = null;
 	}
 	
