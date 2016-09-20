@@ -187,6 +187,7 @@ public class GameController : MonoBehaviour
                     if (diff.magnitude < 50.0f)
                     {
                         //Loot(go);
+                        speech.transform.position = Camera.main.WorldToScreenPoint(go.transform.position - new Vector3(0, -80, 0));
                         speech.SetActive(true);
 
                         speech_target = go;
