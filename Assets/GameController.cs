@@ -21,6 +21,8 @@ public class GameController : MonoBehaviour
 	private GameObject andrei;
 	private GameObject bush;
 
+    private SpriteRenderer background;
+
     int sw = 0;
     int current_location;
 
@@ -66,6 +68,8 @@ public class GameController : MonoBehaviour
         item_type.Add(GameObject.Find("Bush"), 4);
 
         pate = GameObject.Find("Pate");
+        
+        background = GameObject.Find("StationBG").GetComponent<SpriteRenderer>();
 
         Debug.Log(item_map);
 
@@ -104,6 +108,9 @@ public class GameController : MonoBehaviour
 	void ChangeLocation(int location)
 	{
         current_location = location;
+
+        // put Pate in the center
+        pate.SendMessage("SetPosition", (Vector2)background.bounds.center);
 
 		switch (location)
 		{
@@ -221,15 +228,14 @@ public class GameController : MonoBehaviour
             speech.SetActive(false);
             speech_target = null;
 
-            if (current_location == 0 && patepos.x > 680.0f)
+            // change location if we walk to edge of the screen
+            if (patepos.x > (background.bounds.max.x - 40.0f) ||
+                patepos.x < (background.bounds.min.x + 40.0f))
             {
-                StartTransition(1);
-                //ChangeLocation(1);
-            }
-            else if (current_location == 1 && patepos.x < 40.0f)
-            {
-                //ChangeLocation(0);
-                StartTransition(0);
+                if (current_location == 0)
+                    StartTransition(1);
+                else
+                    StartTransition(0);
             }
 
             // go through all interactable objects and check if we're close to them
@@ -316,6 +322,9 @@ public class GameController : MonoBehaviour
         transition_target = location;
         transition_in_timer = 1.0f;
         transition_active = true;
+
+        // stop Pate
+        pate.SendMessage("StopMoving");
     }
 
     void OnGUI()

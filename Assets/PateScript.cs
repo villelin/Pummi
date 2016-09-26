@@ -74,4 +74,9 @@ public class PateScript : MonoBehaviour
         current_pos = pos;
         target_pos = current_pos;
     }
+
+    void StopMoving()
+    {
+        target_pos = current_pos;
+    }
 }
