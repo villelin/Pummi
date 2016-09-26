@@ -2,37 +2,45 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Player {
-    private List<GameItem> inventory;
+public class Player
+{
+    private int cash;
+    private int location;
+    private Vector2 position;
 
     public Player()
     {
-        inventory = new List<GameItem>();
+        cash = 0;
+        position = new Vector2(400, 100);
     }
 
-    public void Loot(GameItem item)
+    public void AddCash(int amount)
     {
-        Debug.Log("Looted " + item.GetName());
-        inventory.Add(item);
-    }
-
-    public string GetInventory()
-    {
-        string inv = "Inventory:\n";
-        foreach (GameItem item in inventory)
-        {
-            inv += item.GetName() + "\n";
-        }
-        return inv;
+        cash += amount;
     }
 
     public int GetCash()
     {
-        int cash = 0;
-        foreach (GameItem item in inventory)
-        {
-            cash += item.GetCash();
-        }
         return cash;
+    }
+
+    public void SetLocation(int new_location)
+    {
+        location = new_location;
+    }
+
+    public int GetLocation()
+    {
+        return location;
+    }
+
+    public void SetPosition(Vector2 pos)
+    {
+        position = pos;
+    }
+
+    public Vector2 GetPosition()
+    {
+        return position;
     }
 }

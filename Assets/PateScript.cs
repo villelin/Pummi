@@ -53,8 +53,6 @@ public class PateScript : MonoBehaviour
         transform.position = new Vector3(current_pos.x, current_pos.y + walk_offset, 0);
 
         transform.localRotation = Quaternion.Euler(0, 0, walk_rot);
-
-        //renderer.color = new Color(x, 1.0f - x, Mathf.Abs(y));
     }
 
     void SetTarget(Vector2 pos)

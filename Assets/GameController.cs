@@ -6,8 +6,7 @@ using System.Collections.Generic;
 
 public class GameController : MonoBehaviour
 {
-    private Player player;
-    private Dictionary<GameObject, GameItem> item_map;
+    private Dictionary<GameObject, IInteractiveObject> item_map;
     private Dictionary<GameObject, int> item_type;
     private GameObject pate;
     private GameObject speech;
@@ -41,19 +40,20 @@ public class GameController : MonoBehaviour
         transition_out_timer = 0;
         fade_level = 0.0f;
 
-        player = new Player();
-        item_map = new Dictionary<GameObject, GameItem>();
+        item_map = new Dictionary<GameObject, IInteractiveObject>();
 
-		item_map.Add(GameObject.Find("Andrei"), new GameItem("Andrei"));
-		item_map.Add(GameObject.Find("Lissu"), new GameItem("Lissu"));
-		item_map.Add(GameObject.Find("Bush"), new GameItem("Bush"));
-        item_map.Add(GameObject.Find("Pullo1"), new GameItem("Pullo1"));
-        item_map.Add(GameObject.Find("Pullo2"), new GameItem("Pullo2"));
-        item_map.Add(GameObject.Find("Pullo3"), new GameItem("Pullo3"));
-        item_map.Add(GameObject.Find("Pullo4"), new GameItem("Pullo4"));
-        item_map.Add(GameObject.Find("Pullo5"), new GameItem("Pullo5"));
-        item_map.Add(GameObject.Find("Pullo6"), new GameItem("Pullo6"));
-        item_map.Add(GameObject.Find("Pullo7"), new GameItem("Pullo7"));
+        item_map.Add(GameObject.Find("Andrei"), Persistence.instance.iobjects["Andrei"]);
+        item_map.Add(GameObject.Find("Lissu"), Persistence.instance.iobjects["Lissu"]);
+        item_map.Add(GameObject.Find("Bush"), Persistence.instance.iobjects["Bush"]);
+        item_map.Add(GameObject.Find("Pullo1"), Persistence.instance.iobjects["Pullo1"]);
+        item_map.Add(GameObject.Find("Pullo2"), Persistence.instance.iobjects["Pullo2"]);
+        item_map.Add(GameObject.Find("Pullo3"), Persistence.instance.iobjects["Pullo3"]);
+        item_map.Add(GameObject.Find("Pullo4"), Persistence.instance.iobjects["Pullo4"]);
+        item_map.Add(GameObject.Find("Pullo5"), Persistence.instance.iobjects["Pullo5"]);
+        item_map.Add(GameObject.Find("Pullo6"), Persistence.instance.iobjects["Pullo6"]);
+        item_map.Add(GameObject.Find("Pullo7"), Persistence.instance.iobjects["Pullo7"]);
+
+        Debug.Log("item_map = " + item_map);
 
         item_type = new Dictionary<GameObject, int>();
         item_type.Add(GameObject.Find("Pullo1"), 1);
@@ -71,12 +71,8 @@ public class GameController : MonoBehaviour
         
         background = GameObject.Find("StationBG").GetComponent<SpriteRenderer>();
 
-        Debug.Log(item_map);
-
-        // show cash
         Text cashtext = GameObject.Find("Cash").GetComponent<Text>();
-        cashtext.text = "€" + Persistence.instance.cash;
-
+        cashtext.text = "€" + Persistence.instance.player.GetCash();
 
         Text speechtext = GameObject.Find("SpeechText").GetComponent<Text>();
         speechtext.text = "STEAL!";
@@ -108,9 +104,6 @@ public class GameController : MonoBehaviour
 	void ChangeLocation(int location)
 	{
         current_location = location;
-
-        // put Pate in the center
-        pate.SendMessage("SetPosition", (Vector2)background.bounds.center);
 
 		switch (location)
 		{
@@ -194,6 +187,9 @@ public class GameController : MonoBehaviour
             {
                 ChangeLocation(transition_target);
                 transition_out_timer = 1.0f;
+
+                // put Pate in the center
+                pate.SendMessage("SetPosition", (Vector2)background.bounds.center);
             }
 
             fade_level = Mathf.Max(1.0f - transition_in_timer, 0.0f);
@@ -239,9 +235,10 @@ public class GameController : MonoBehaviour
             }
 
             // go through all interactable objects and check if we're close to them
-            foreach (KeyValuePair<GameObject, GameItem> obj in item_map)
+            foreach (KeyValuePair<GameObject, IInteractiveObject> obj in item_map)
             {
                 GameObject go = obj.Key;
+                IInteractiveObject iobj = obj.Value;
                 // only handle objects that are active
                 if (go.activeSelf)
                 {
@@ -252,20 +249,16 @@ public class GameController : MonoBehaviour
                     if (diff.magnitude < 50.0f)
                     {
                         //Loot(go);
-                        speech.transform.position = Camera.main.WorldToScreenPoint(go.transform.position - new Vector3(0, -80, 0));
-                        speech.SetActive(true);
+                        if (iobj.CanTalk())
+                        {
+                            speech.transform.position = Camera.main.WorldToScreenPoint(go.transform.position - new Vector3(0, -80, 0));
+                            speech.SetActive(true);
+
+                            Text speech_text = GameObject.Find("SpeechText").GetComponent<Text>();
+                            speech_text.text = "Talk";
+                        }
 
                         int type = item_type[go];
-
-                        Text speech_text = GameObject.Find("SpeechText").GetComponent<Text>();
-
-                        switch (type)
-                        {
-                            case 1:     speech_text.text = "Steal!"; break;
-                            case 2:     speech_text.text = "FIGHT!"; break;
-                            case 3:     speech_text.text = "Beg"; break;
-                            case 4:     speech_text.text = "Search"; break;
-                        }      
 
                         speech_target = go;
                         break;
@@ -281,28 +274,29 @@ public class GameController : MonoBehaviour
         if (obj != null)
         {
             // find item for this object
-            GameItem item = item_map[obj];
+            IInteractiveObject item = item_map[obj];
             if (item != null)
             {
-                player.Loot(item);
             }
 
             // hide this object after it's looted
-            obj.SetActive(false);
-
-            Debug.Log("Current inv: " + player.GetInventory());
-
-            // update inventory
-       //     Text invtext = GameObject.Find("Text").GetComponent<Text>();
-       //     invtext.text = player.GetInventory();
+            if (item.CanLoot())
+            {
+                obj.SetActive(false);
+            }
 
             // update cash
             Text cashtext = GameObject.Find("Cash").GetComponent<Text>();
-            cashtext.text = "€" + player.GetCash();
+            cashtext.text = "€" + Persistence.instance.player.GetCash();
 
-            // talk
-            SaveGlobalState();
-            SceneManager.LoadScene("conversation");
+            if (item.CanTalk())
+            {
+                item.Interact(0);
+
+                // talk
+                SaveGlobalState();
+                SceneManager.LoadScene("conversation");
+            }
         }
     }
 
@@ -336,17 +330,17 @@ public class GameController : MonoBehaviour
 
     void LoadGlobalState()
     {
-        Vector2 pate_pos = Persistence.instance.pate_position;
+        Vector2 pate_pos = Persistence.instance.player.GetPosition();
         Debug.Log("load pos " + pate_pos);
         pate.SendMessage("SetPosition", pate_pos);
 
-        ChangeLocation(Persistence.instance.location);
+        ChangeLocation(Persistence.instance.player.GetLocation());
     }
 
     void SaveGlobalState()
     {
         Vector2 pate_pos = pate.transform.position;
-        Persistence.instance.pate_position = pate_pos;
-        Persistence.instance.location = current_location;
+        Persistence.instance.player.SetPosition(pate_pos);
+        Persistence.instance.player.SetLocation(current_location);
     }
 }
