@@ -17,6 +17,8 @@ public class Player
     public void AddCash(int amount)
     {
         cash += amount;
+        if (cash < 0)
+            cash = 0;
     }
 
     public int GetCash()

@@ -8,6 +8,7 @@ public class NPC : IInteractiveObject
     protected string intro_conversation;
     protected List<string> answers;
     protected int correct_answer;
+    protected int reward_cash;
 
     public NPC()
     {
@@ -32,6 +33,11 @@ public class NPC : IInteractiveObject
     public int GetCorrectAnswer()
     {
         return correct_answer;
+    }
+
+    public int GetRewardCash()
+    {
+        return reward_cash;
     }
 
 
