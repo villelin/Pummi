@@ -17,7 +17,7 @@ public class Andrei : NPC
         page4 = new DialogPage();
         page5 = new DialogPage();
 
-        page1.SetText("DIALOG PAGE 1");
+        page1.SetText("TÖTTÖRÖÖ");
         page1.SetReply(0, "REPLY1", page2);
         page1.SetReply(1, "REPLY2", page3);
 
