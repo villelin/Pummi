@@ -5,22 +5,28 @@ using System.Collections.Generic;
 public class NPC : IInteractiveObject
 {
     private bool talked_to;
-    protected List<string> conversations;
+    protected string intro_conversation;
+    protected List<string> answers;
     protected int correct_answer;
 
     public NPC()
     {
         this.talked_to = false;
-        this.conversations = new List<string>();
+        this.answers = new List<string>();
         this.correct_answer = 0;
 
-        conversations.Add("testi");
+        this.intro_conversation = "INTRO CONVERSATION";
     }
 
 
-    public List<string> GetConversations()
+    public string GetIntroConversation()
     {
-        return this.conversations;
+        return this.intro_conversation;
+    }
+
+    public string GetAnswer(int number)
+    {
+        return this.answers[number];
     }
 
     public int GetCorrectAnswer()
