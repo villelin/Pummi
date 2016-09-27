@@ -1,4 +1,3 @@
-﻿using UnityEngine;
 using System.Collections;
 
 public class Andrei : NPC
@@ -17,7 +16,8 @@ public class Andrei : NPC
         page3 = new DialogPage();
         page4 = new DialogPage();
         page5 = new DialogPage();
-        page5 = new DialogPage();
+		page5 = new DialogPage();
+		page6 = new DialogPage();
 
         page1.SetText("Jahashh... Mikässhh miässh she shinä olethh?");
         page1.SetReply(0, "Pate vaan, tarvin rahaa", page2);
