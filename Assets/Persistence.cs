@@ -10,6 +10,7 @@ public class Persistence : MonoBehaviour
     public Dictionary<string, IInteractiveObject> iobjects;
     public Location park;
     public Location station;
+    public NPC conversation_target;
     
     public static Persistence instance;
 
@@ -46,6 +47,8 @@ public class Persistence : MonoBehaviour
             park.AddObject(iobjects["Pullo5"]);
             park.AddObject(iobjects["Pullo6"]);
             park.AddObject(iobjects["Pullo7"]);
+
+            conversation_target = null;
 
             DontDestroyOnLoad(gameObject);
             instance = this;

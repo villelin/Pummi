@@ -238,6 +238,8 @@ public class GameController : MonoBehaviour
             {
                 item.Interact(0);
 
+                Persistence.instance.conversation_target = (NPC)item;
+
                 // talk
                 SaveGlobalState();
                 SceneManager.LoadScene("conversation");
