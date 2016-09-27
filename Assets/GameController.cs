@@ -7,20 +7,14 @@ using System.Collections.Generic;
 public class GameController : MonoBehaviour
 {
     private Dictionary<GameObject, IInteractiveObject> item_map;
-    private Dictionary<GameObject, int> item_type;
     private GameObject pate;
     private GameObject speech;
     private GameObject speech_target;
     private float time;
 
+    private SpriteRenderer background;
     private GameObject parkbg;
     private GameObject stationbg;
-	private GameObject metro;
-	private GameObject lissu;
-	private GameObject andrei;
-	private GameObject bush;
-
-    private SpriteRenderer background;
 
     int sw = 0;
     int current_location;
@@ -52,20 +46,9 @@ public class GameController : MonoBehaviour
         item_map.Add(GameObject.Find("Pullo5"), Persistence.instance.iobjects["Pullo5"]);
         item_map.Add(GameObject.Find("Pullo6"), Persistence.instance.iobjects["Pullo6"]);
         item_map.Add(GameObject.Find("Pullo7"), Persistence.instance.iobjects["Pullo7"]);
+        item_map.Add(GameObject.Find("Metro"), Persistence.instance.iobjects["Metro"]);
 
         Debug.Log("item_map = " + item_map);
-
-        item_type = new Dictionary<GameObject, int>();
-        item_type.Add(GameObject.Find("Pullo1"), 1);
-        item_type.Add(GameObject.Find("Pullo2"), 1);
-        item_type.Add(GameObject.Find("Pullo3"), 1);
-        item_type.Add(GameObject.Find("Pullo4"), 1);
-        item_type.Add(GameObject.Find("Pullo5"), 1);
-        item_type.Add(GameObject.Find("Pullo6"), 1);
-        item_type.Add(GameObject.Find("Pullo7"), 1);
-        item_type.Add(GameObject.Find("Andrei"), 2);
-        item_type.Add(GameObject.Find("Lissu"), 3);
-        item_type.Add(GameObject.Find("Bush"), 4);
 
         pate = GameObject.Find("Pate");
         
@@ -87,12 +70,8 @@ public class GameController : MonoBehaviour
 
         time = 0.0f;
 
-		parkbg = GameObject.Find("ParkBG");
-		stationbg = GameObject.Find("StationBG");
-		metro = GameObject.Find("Metro");
-		lissu = GameObject.Find("Lissu");
-		andrei = GameObject.Find("Andrei");
-		bush = GameObject.Find("Bush");
+        parkbg = GameObject.Find("ParkBG");
+        stationbg = GameObject.Find("StationBG");
 
         ChangeLocation(0);
 
@@ -101,77 +80,45 @@ public class GameController : MonoBehaviour
 
 	// Change current location, hides/shows objects based on location
 	// 0 = station, 1 = park
-	void ChangeLocation(int location)
+	void ChangeLocation(int new_location)
 	{
-        current_location = location;
+        current_location = new_location;
 
-		switch (location)
-		{
-			case 0:			// station
-				{
-					parkbg.SetActive(false);		// hide park background
-					stationbg.SetActive(true);      // show station background
-					metro.SetActive(true);          // show metro
+        Location location;
+        if (new_location == 0)
+        {
+            location = Persistence.instance.station;
+            parkbg.SetActive(false);
+            stationbg.SetActive(true);
+        }
+        else
+        {
+            location = Persistence.instance.park;
+            parkbg.SetActive(true);
+            stationbg.SetActive(false);
+        }
 
-                    foreach (KeyValuePair<GameObject, int> obj in item_type)
-                    {
-                        switch (obj.Value)
-                        {
-                            case 1:     // pullo
-                                obj.Key.SetActive(false);
-                                break;
-                            case 2:     // Andrei
-                                obj.Key.SetActive(true);
-                                break;
-                            case 3:     // Lissu
-                                obj.Key.SetActive(true);
-                                break;
-                            case 4:     // Bush
-                                obj.Key.SetActive(false);
-                                break;
+        // hide everything by default
+        foreach (KeyValuePair<GameObject, IInteractiveObject> obj in item_map)
+        {
+            GameObject go = obj.Key;
+            go.SetActive(false);
+        }
 
-                            default:
-                                obj.Key.SetActive(false);
-                                break;
-                        }
-                    }
+        // show objects based on location
+        List<IInteractiveObject> objlist = location.GetObjects();
 
-					break;
-				}
-			case 1:			// park
-				{
-					parkbg.SetActive(true);			// show park background
-					stationbg.SetActive(false);     // hide station background
-					metro.SetActive(false);         // hide metro
-
-                    foreach (KeyValuePair<GameObject, int> obj in item_type)
-                    {
-                        switch (obj.Value)
-                        {
-                            case 1:     // pullo
-                                if (Random.Range(0.0f, 100.0f) < 20.0f)
-                                    obj.Key.SetActive(true);
-                                else
-                                    obj.Key.SetActive(false);
-                                break;
-                            case 2:     // Andrei
-                                obj.Key.SetActive(false);
-                                break;
-                            case 3:     // Lissu
-                                obj.Key.SetActive(false);
-                                break;
-                            case 4:     // Bush
-                                obj.Key.SetActive(true);
-                                break;
-
-                            default:
-                                obj.Key.SetActive(false);
-                                break;
-                        }
-                    }
-                    break;
-				}
-		}
+        foreach (IInteractiveObject obj in objlist)
+        {
+            foreach (KeyValuePair<GameObject, IInteractiveObject> item_pair in item_map)
+            {
+                if (item_pair.Value == obj)
+                {
+                    GameObject go = item_pair.Key;
+                    go.SetActive(true);
+                }
+            }
+        }
 	}
 	
 	// Update is called once per frame
@@ -257,8 +204,6 @@ public class GameController : MonoBehaviour
                             Text speech_text = GameObject.Find("SpeechText").GetComponent<Text>();
                             speech_text.text = "Talk";
                         }
-
-                        int type = item_type[go];
 
                         speech_target = go;
                         break;
