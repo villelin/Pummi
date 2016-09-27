@@ -23,17 +23,17 @@ public class Persistence : MonoBehaviour
             park = new Location();
 
             iobjects = new Dictionary<string, IInteractiveObject>();
-            iobjects.Add("Andrei",  new NPC());
-            iobjects.Add("Lissu", new NPC());
+            iobjects.Add("Andrei",  new Andrei());
+            iobjects.Add("Lissu", new Lissu());
             iobjects.Add("Bush", new NPC());
-            iobjects.Add("Pullo1", new NPC());
-            iobjects.Add("Pullo2", new NPC());
-            iobjects.Add("Pullo3", new NPC());
-            iobjects.Add("Pullo4", new NPC());
-            iobjects.Add("Pullo5", new NPC());
-            iobjects.Add("Pullo6", new NPC());
-            iobjects.Add("Pullo7", new NPC());
-            iobjects.Add("Metro", new NPC());
+            iobjects.Add("Pullo1", new Bottle());
+            iobjects.Add("Pullo2", new Bottle());
+            iobjects.Add("Pullo3", new Bottle());
+            iobjects.Add("Pullo4", new Bottle());
+            iobjects.Add("Pullo5", new Bottle());
+            iobjects.Add("Pullo6", new Bottle());
+            iobjects.Add("Pullo7", new Bottle());
+            iobjects.Add("Metro", new Metro());
 
             station.AddObject(iobjects["Andrei"]);
             station.AddObject(iobjects["Lissu"]);
