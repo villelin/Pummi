@@ -5,34 +5,26 @@ using System.Collections.Generic;
 public class NPC : IInteractiveObject
 {
     private bool talked_to;
-    protected string intro_conversation;
-    protected List<string> answers;
-    protected int correct_answer;
     protected int reward_cash;
+
+    protected DialogPage current_dialog;
 
     public NPC()
     {
         this.talked_to = false;
-        this.answers = new List<string>();
-        this.correct_answer = 0;
 
-        this.intro_conversation = "INTRO CONVERSATION";
+        current_dialog = null;
     }
 
 
-    public string GetIntroConversation()
+    public DialogPage GetCurrentDialog()
     {
-        return this.intro_conversation;
+        return current_dialog;
     }
 
-    public string GetAnswer(int number)
+    public void AdvanceDialog(DialogPage target)
     {
-        return this.answers[number];
-    }
-
-    public int GetCorrectAnswer()
-    {
-        return correct_answer;
+        current_dialog = target;
     }
 
     public int GetRewardCash()

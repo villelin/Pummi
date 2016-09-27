@@ -10,6 +10,7 @@ public class Conversation : MonoBehaviour
     GameObject reply1_button;
     GameObject reply2_button;
     GameObject reply3_button;
+    GameObject reply4_button;
     GameObject done_button;
 
 	// Use this for initialization
@@ -17,19 +18,18 @@ public class Conversation : MonoBehaviour
     {
         reply1_button = GameObject.Find("ReplyButton1");
         reply1_button.GetComponent<Button>().onClick.AddListener(() => { ReplyButton1Clicked(); });
-        reply1_button.SetActive(true);
 
         reply2_button = GameObject.Find("ReplyButton2");
         reply2_button.GetComponent<Button>().onClick.AddListener(() => { ReplyButton2Clicked(); });
-        reply2_button.SetActive(true);
 
         reply3_button = GameObject.Find("ReplyButton3");
         reply3_button.GetComponent<Button>().onClick.AddListener(() => { ReplyButton3Clicked(); });
-        reply3_button.SetActive(true);
+
+        reply4_button = GameObject.Find("ReplyButton4");
+        reply4_button.GetComponent<Button>().onClick.AddListener(() => { ReplyButton4Clicked(); });
 
         done_button = GameObject.Find("DoneButton");
         done_button.GetComponent<Button>().onClick.AddListener(() => { DoneButtonClicked(); });
-        done_button.SetActive(false);
 
         conversation_target = Persistence.instance.conversation_target;
 
@@ -38,13 +38,9 @@ public class Conversation : MonoBehaviour
         GameObject andrei_image = GameObject.Find("AndreiImage");
         andrei_image.SetActive(conversation_target.GetType() == typeof(Andrei));
 
-            if (conversation_target != null)
+        if (conversation_target != null)
         {
-            Text convtext = GameObject.Find("ConversationText").GetComponent<Text>();
-
-            string intro = Persistence.instance.conversation_target.GetIntroConversation();
-
-            convtext.text = intro;
+            SetDialog(conversation_target.GetCurrentDialog());
         }
     }
 
@@ -54,21 +50,48 @@ public class Conversation : MonoBehaviour
 	
 	}
 
-    private void Answer(int answer)
+    void SetDialog(DialogPage page)
     {
-        if (conversation_target.GetCorrectAnswer() == answer)
-            Persistence.instance.player.AddCash(conversation_target.GetRewardCash());
-
         Text convtext = GameObject.Find("ConversationText").GetComponent<Text>();
-        string answertext = Persistence.instance.conversation_target.GetAnswer(answer);
 
-        convtext.text = answertext;
+        string intro = Persistence.instance.conversation_target.GetCurrentDialog().GetText();
+        convtext.text = page.GetText();
 
-        // hide replies, show done button
         reply1_button.SetActive(false);
         reply2_button.SetActive(false);
         reply3_button.SetActive(false);
-        done_button.SetActive(true);
+        reply4_button.SetActive(false);
+
+        if (page.GetReplyTarget(0) != null)
+        {
+            reply1_button.SetActive(true);
+            GameObject.Find("ReplyText1").GetComponent<Text>().text = page.GetReplyText(0);
+        }
+        if (page.GetReplyTarget(1) != null)
+        {
+            reply2_button.SetActive(true);
+            GameObject.Find("ReplyText2").GetComponent<Text>().text = page.GetReplyText(1);
+        }
+        if (page.GetReplyTarget(2) != null)
+        {
+            reply3_button.SetActive(true);
+            GameObject.Find("ReplyText3").GetComponent<Text>().text = page.GetReplyText(2);
+        }
+        if (page.GetReplyTarget(3) != null)
+        {
+            reply4_button.SetActive(true);
+            GameObject.Find("ReplyText4").GetComponent<Text>().text = page.GetReplyText(3);
+        }
+
+        done_button.SetActive(page.IsLast());
+    }
+
+    private void Answer(int answer)
+    {
+        DialogPage target = conversation_target.GetCurrentDialog().GetReplyTarget(answer);
+        conversation_target.AdvanceDialog(target);
+
+        SetDialog(target);
     }
 
     void ReplyButton1Clicked()
@@ -84,6 +107,11 @@ public class Conversation : MonoBehaviour
     void ReplyButton3Clicked()
     {
         Answer(2);
+    }
+
+    void ReplyButton4Clicked()
+    {
+        Answer(3);
     }
 
     void DoneButtonClicked()
