@@ -8,6 +8,7 @@ public class Andrei : NPC
     DialogPage page3;
     DialogPage page4;
     DialogPage page5;
+    DialogPage page6;
 
     public Andrei()
     {
@@ -34,8 +35,8 @@ public class Andrei : NPC
         page4.SetLast();
 
 // Andrei antaa 20e:
-        page6.SetText("...ensin puukottaa liikekumppanit selkään, vaikka monenmoista jeesiä hänelle tarjosin ja koulutin kuule sen pikkuvesselistä alalle, oli mulle kuin oma poika.. Ja vaimokin saamari läx sen matkaan ja koirakin perkele karkasi… Kuulee… Sinä.. Pate? Sinä oot kuule hyvä jätkä, Pate! Ota kuule tästä, saat kakskymppiä!");
-        page6.SetLast();
+        page5.SetText("...ensin puukottaa liikekumppanit selkään, vaikka monenmoista jeesiä hänelle tarjosin ja koulutin kuule sen pikkuvesselistä alalle, oli mulle kuin oma poika.. Ja vaimokin saamari läx sen matkaan ja koirakin perkele karkasi… Kuulee… Sinä.. Pate? Sinä oot kuule hyvä jätkä, Pate! Ota kuule tästä, saat kakskymppiä!");
+        page5.SetLast();
 
 // Andrei ryöstää:
         page6.SetText("JUMANSVIIDU MIKÄ MIELISTELIJÄ! RAHAT TÄNNE");
