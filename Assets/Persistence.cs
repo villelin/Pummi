@@ -22,17 +22,17 @@ public class Persistence : MonoBehaviour
             park = new Location();
 
             iobjects = new Dictionary<string, IInteractiveObject>();
-            iobjects.Add("Andrei",  new NPC("Andrei"));
-            iobjects.Add("Lissu", new NPC("Lissu"));
-            iobjects.Add("Bush", new NPC("Bush"));
-            iobjects.Add("Pullo1", new NPC("Pullo1"));
-            iobjects.Add("Pullo2", new NPC("Pullo2"));
-            iobjects.Add("Pullo3", new NPC("Pullo3"));
-            iobjects.Add("Pullo4", new NPC("Pullo4"));
-            iobjects.Add("Pullo5", new NPC("Pullo5"));
-            iobjects.Add("Pullo6", new NPC("Pullo6"));
-            iobjects.Add("Pullo7", new NPC("Pullo7"));
-            iobjects.Add("Metro", new NPC("Metro"));
+            iobjects.Add("Andrei",  new NPC());
+            iobjects.Add("Lissu", new NPC());
+            iobjects.Add("Bush", new NPC());
+            iobjects.Add("Pullo1", new NPC());
+            iobjects.Add("Pullo2", new NPC());
+            iobjects.Add("Pullo3", new NPC());
+            iobjects.Add("Pullo4", new NPC());
+            iobjects.Add("Pullo5", new NPC());
+            iobjects.Add("Pullo6", new NPC());
+            iobjects.Add("Pullo7", new NPC());
+            iobjects.Add("Metro", new NPC());
 
             station.AddObject(iobjects["Andrei"]);
             station.AddObject(iobjects["Lissu"]);

@@ -3,12 +3,10 @@ using System.Collections;
 
 public class NPC : IInteractiveObject
 {
-    private string name;
     private bool talked_to;
 
-    public NPC(string name)
+    public NPC()
     {
-        this.name = name;
         this.talked_to = false;
     }
 
