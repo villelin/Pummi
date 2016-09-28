@@ -161,25 +161,6 @@ public class GameController : MonoBehaviour
                 {
                     Vector3 tp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-                    /*
-                    // check if point is inside valid area, otherwise adjust to be valid
-                    foreach (KeyValuePair<GameObject, IInteractiveObject> item_pair in item_map)
-                    {
-                        GameObject go = item_pair.Key;
-                        if (go.activeSelf)      // check only active objects
-                        {
-                            Bounds bounds = go.GetComponent<SpriteRenderer>().bounds;
-                            if (tp.x >= bounds.min.x &&
-                                tp.x <= bounds.max.x &&
-                                tp.y >= bounds.min.y &&
-                                tp.y <= bounds.max.y)
-                            {
-                                Debug.Log("klikattiin " + go.name);
-                            }
-                        }
-                    }
-                    */
-
                     pate.SendMessage("SetTarget", new Vector2(tp.x, tp.y));
                 }
             }
@@ -188,16 +169,6 @@ public class GameController : MonoBehaviour
 
             speech.SetActive(false);
             speech_target = null;
-
-            // change location if we walk to edge of the screen
-            if (patepos.x > (background.bounds.max.x - 40.0f) ||
-                patepos.x < (background.bounds.min.x + 40.0f))
-            {
-                if (current_location == 0)
-                    StartTransition(1);
-                else
-                    StartTransition(0);
-            }
 
             // go through all interactable objects and check if we're close to them
             foreach (KeyValuePair<GameObject, IInteractiveObject> obj in item_map)
@@ -307,5 +278,13 @@ public class GameController : MonoBehaviour
         Vector2 pate_pos = pate.transform.position;
         Persistence.instance.player.SetPosition(pate_pos);
         Persistence.instance.player.SetLocation(current_location);
+    }
+
+    void LocationTrigger()
+    {
+        if (current_location == 0)
+            StartTransition(1);
+        else
+            StartTransition(0);
     }
 }

@@ -103,4 +103,14 @@ public class PateScript : MonoBehaviour
 
         StopMoving();
     }
+
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.name == "LeftLocationTrigger" ||
+            collider.name == "RightLocationTrigger")
+        {
+            Debug.Log("triggered");
+            game_controller.SendMessage("LocationTrigger");
+        }
+    }
 }
