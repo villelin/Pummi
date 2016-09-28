@@ -52,6 +52,8 @@ public class PateScript : MonoBehaviour
         current_pos += direction;
         transform.position = new Vector3(current_pos.x, current_pos.y + walk_offset, 0);
 
+        renderer.sortingOrder = 1000 - (int)Mathf.Floor(transform.position.y);
+
         transform.localRotation = Quaternion.Euler(0, 0, walk_rot);
     }
 
@@ -60,7 +62,17 @@ public class PateScript : MonoBehaviour
         Debug.Log("SET TARGET " + pos);
         target_pos = pos;
 
-		Vector2 direction = target_pos - current_pos;
+        Vector2 direction = target_pos - current_pos;
+
+
+        RaycastHit2D hit = Physics2D.Raycast(current_pos, direction, direction.magnitude);
+        if (hit.collider != null)
+        {
+            target_pos = hit.point;
+        }
+
+
+        
 		if (direction.x < 0.0f)
 			renderer.flipX = false;
 		else

@@ -156,12 +156,30 @@ public class GameController : MonoBehaviour
             // if mouse was clicked, set a target position for Pate
             if (Input.GetMouseButtonUp(0))
             {
-                Debug.Log("clicked");
-
                 // don't move if we're actually clicking an UI item
                 if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
                 {
                     Vector3 tp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                    /*
+                    // check if point is inside valid area, otherwise adjust to be valid
+                    foreach (KeyValuePair<GameObject, IInteractiveObject> item_pair in item_map)
+                    {
+                        GameObject go = item_pair.Key;
+                        if (go.activeSelf)      // check only active objects
+                        {
+                            Bounds bounds = go.GetComponent<SpriteRenderer>().bounds;
+                            if (tp.x >= bounds.min.x &&
+                                tp.x <= bounds.max.x &&
+                                tp.y >= bounds.min.y &&
+                                tp.y <= bounds.max.y)
+                            {
+                                Debug.Log("klikattiin " + go.name);
+                            }
+                        }
+                    }
+                    */
+
                     pate.SendMessage("SetTarget", new Vector2(tp.x, tp.y));
                 }
             }
