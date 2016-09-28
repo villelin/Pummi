@@ -31,7 +31,7 @@ public class Andrei : NPC
         page3.SetReply(1, "Jatka kuuntelua", page5);
         page3.SetReply(3, "Sano jotain myötätuntoista", page6);
 
-        page4.SetText("Et saanut rahaa");
+        page4.SetText("Et saanut rahaa :(");
         page4.SetLast();
 
 // Andrei antaa 20e:
