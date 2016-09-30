@@ -71,7 +71,7 @@ public class Persistence : MonoBehaviour
         bool[] bottle_sizes = new bool[7];
         for (int i=0; i < 7; i++)
         {
-            bottle_sizes[i] = Random.Range(0, 100) < 70 ? true : false;
+            bottle_sizes[i] = Random.Range(0, 100) < 80 ? true : false;
         }
         ((Bottle)iobjects["Can1"]).SetVisible(bottle_sizes[0] == true);
         ((Bottle)iobjects["Can2"]).SetVisible(bottle_sizes[1] == true);

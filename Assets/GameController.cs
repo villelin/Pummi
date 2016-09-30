@@ -230,7 +230,7 @@ public class GameController : MonoBehaviour
                                     speech_text.text = "Kähmi puskaa";
                                     break;
                                 case InteractType.ES:
-                                    speech_text.text = "Tutki";
+                                    speech_text.text = "Tutki ES-tölkkiä";
                                     break;
                             }
                         }

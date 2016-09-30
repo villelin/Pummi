@@ -7,11 +7,13 @@ public class Player
     private double cash;
     private int location;
     private Vector2 position;
+    private bool es_buff;
 
     public Player()
     {
         cash = 0;
         position = new Vector2(400, 100);
+        es_buff = false;
     }
 
     public void AddCash(double amount)
@@ -44,5 +46,15 @@ public class Player
     public Vector2 GetPosition()
     {
         return position;
+    }
+
+    public void SetESBuff()
+    {
+        es_buff = true;
+    }
+
+    public bool HasESBuff()
+    {
+        return es_buff;
     }
 }

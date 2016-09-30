@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MiniGameController : MonoBehaviour {
 
@@ -10,6 +11,8 @@ public class MiniGameController : MonoBehaviour {
 	PointerController right;
 	//    RawImage box;
 	GameObject ball;
+
+    Text timer_text;
 
 
     private float timer;
@@ -22,6 +25,8 @@ public class MiniGameController : MonoBehaviour {
 		right = GameObject.Find ("Right").GetComponent<PointerController> ();
 		ball = GameObject.Find ("Ball");
 
+        timer_text = GameObject.Find("TimerText").GetComponent<Text>();
+
         timer = 15.0f;
 
 	}
@@ -30,6 +35,8 @@ public class MiniGameController : MonoBehaviour {
 	void Update () {
 
         timer -= Time.deltaTime;
+
+        timer_text.text = string.Format("Aikaa jäljellä: {0:0.00s}", Mathf.Max(timer, 0.0f));
 
         if (timer <= 0.0f)
         {
