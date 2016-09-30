@@ -9,7 +9,7 @@ public class Inspector : NPC
     {
         page1 = new DialogPage();
 
-        page1.SetText("Perkeleen pummi. Nyt saat keppiä!");
+        page1.SetText("A WILD INSPECTOR APPEARS!\n\nPerkeleen pummi. Nyt saat keppiä!");
         page1.SetLast();
         page1.SetGameOver();
 

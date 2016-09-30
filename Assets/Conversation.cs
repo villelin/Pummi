@@ -37,6 +37,8 @@ public class Conversation : MonoBehaviour
         lissu_image.SetActive(conversation_target.GetType() == typeof(Lissu));
         GameObject andrei_image = GameObject.Find("AndreiImage");
         andrei_image.SetActive(conversation_target.GetType() == typeof(Andrei));
+        GameObject inspector_image = GameObject.Find("InspectorImage");
+        inspector_image.SetActive(conversation_target.GetType() == typeof(Inspector));
 
         if (conversation_target != null)
         {

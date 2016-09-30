@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 
 public class GameController : MonoBehaviour
 {
@@ -52,6 +53,13 @@ public class GameController : MonoBehaviour
         item_map.Add(GameObject.Find("Bottle2"), Persistence.instance.iobjects["Bottle2"]);
         item_map.Add(GameObject.Find("Bottle3"), Persistence.instance.iobjects["Bottle3"]);
         item_map.Add(GameObject.Find("Bottle4"), Persistence.instance.iobjects["Bottle4"]);
+        item_map.Add(GameObject.Find("Bag1"), Persistence.instance.iobjects["Bag1"]);
+        item_map.Add(GameObject.Find("Bag2"), Persistence.instance.iobjects["Bag2"]);
+        item_map.Add(GameObject.Find("Bag3"), Persistence.instance.iobjects["Bag3"]);
+        item_map.Add(GameObject.Find("Bag4"), Persistence.instance.iobjects["Bag4"]);
+        item_map.Add(GameObject.Find("Bag5"), Persistence.instance.iobjects["Bag5"]);
+        item_map.Add(GameObject.Find("Bag6"), Persistence.instance.iobjects["Bag6"]);
+        item_map.Add(GameObject.Find("Bag7"), Persistence.instance.iobjects["Bag7"]);
 
         Debug.Log("item_map = " + item_map);
 
@@ -238,7 +246,7 @@ public class GameController : MonoBehaviour
     void UpdateCash()
     {
         Text cashtext = GameObject.Find("Cash").GetComponent<Text>();
-        cashtext.text = string.Format("{0:C2}", Persistence.instance.player.GetCash());
+        cashtext.text = Persistence.instance.player.GetCash().ToString("C2", CultureInfo.CreateSpecificCulture("fi-FI"));
     }
 
     // interact with a gameobject
@@ -259,6 +267,7 @@ public class GameController : MonoBehaviour
                     {
                         // hide this object after it's looted
                         obj.SetActive(false);
+                        ((Bottle)item).SetVisible(false);
 
                         double cash = ((Bottle)item).GetCash();   
 
@@ -280,8 +289,8 @@ public class GameController : MonoBehaviour
 
                 case InteractType.Metro:
                     {
-                        int inspector_rng = Random.RandomRange(0, 100);
-                        if (inspector_rng < 10)
+                        int inspector_rng = Random.Range(0, 100);
+                        if (Persistence.instance.player.GetCash() >= 5.0 || inspector_rng < 10)
                         {
                             // 10% chance for instant win
                             SceneManager.LoadScene("winscreen");

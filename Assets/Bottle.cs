@@ -6,9 +6,10 @@ public class Bottle : IInteractiveObject
     private bool visible;
     private double cash;
 
-    public Bottle()
+    public Bottle(double cash)
     {
         visible = true;
+        this.cash = cash;
     }
 
     public int Interact(int param)
@@ -29,11 +30,6 @@ public class Bottle : IInteractiveObject
     public bool IsVisible()
     {
         return visible;
-    }
-
-    public void SetCash(double cash)
-    {
-        this.cash = cash;
     }
 
     public double GetCash()

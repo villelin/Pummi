@@ -34,13 +34,15 @@ public class Lissu : NPC
 
 		page4.SetText("Käytit neljästä eurosta kolme, sinulle jää euro!");
 		page4.SetLast();
-        page4.SetReward(1);
+        page4.SetReward(1.0);
 
 		page5.SetText("Otit pissiksen rahat, muttet ostanut tälle siideriä. Onnittelut, sait 4 euroa!");
 		page5.SetLast();
+        page5.SetReward(4.0);
 
 		page6.SetText("No hyi.. En mä tollasii juo!\n (Saat juoda siiderit itse ja saat 30 senttiä palautusrahaa!)");
 		page6.SetLast();
+        page6.SetReward(0.3);
 
 		AdvanceDialog(page1);
 	}

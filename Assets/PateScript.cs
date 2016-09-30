@@ -15,7 +15,7 @@ public class PateScript : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        renderer = GameObject.Find("Pate").GetComponent<SpriteRenderer>();
+        renderer = GameObject.Find("PateSprite").GetComponent<SpriteRenderer>();
         game_controller = GameObject.Find("GameController");
         angle = 0.0f;
 
@@ -54,11 +54,12 @@ public class PateScript : MonoBehaviour
         // animate pate if walking
         if (walking)
         {
-            walk_offset = Mathf.Abs(Mathf.Sin(angrad)) * 15.0f;
+            walk_offset = Mathf.Abs(Mathf.Sin(angrad)) * 7.0f;
             walk_rot = 0.0f - Mathf.Sin(angrad) * 20.0f;
         }
 
-        transform.localRotation = Quaternion.Euler(0, 0, walk_rot);
+        renderer.transform.localRotation = Quaternion.Euler(0, 0, walk_rot);
+        renderer.transform.position = transform.position - new Vector3(0, walk_offset, 0);
     }
 
     void SetTarget(Vector2 pos)
