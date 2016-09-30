@@ -15,7 +15,6 @@ public class Andrei : NPC
         page2 = new DialogPage();
         page3 = new DialogPage();
         page4 = new DialogPage();
-        page5 = new DialogPage();
 		page5 = new DialogPage();
 		page6 = new DialogPage();
 
