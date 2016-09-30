@@ -246,7 +246,7 @@ public class GameController : MonoBehaviour
     void UpdateCash()
     {
         Text cashtext = GameObject.Find("Cash").GetComponent<Text>();
-        cashtext.text = Persistence.instance.player.GetCash().ToString("C2", CultureInfo.CreateSpecificCulture("fi-FI"));
+        cashtext.text = "Rahaa: " + Persistence.instance.player.GetCash().ToString("C2", CultureInfo.CreateSpecificCulture("fi-FI"));
     }
 
     // interact with a gameobject
