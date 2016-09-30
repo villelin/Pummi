@@ -8,6 +8,7 @@ public class DialogPage
     private DialogPage[] reply_target = new DialogPage[4];
     private bool is_last;
     private double reward;
+    private bool is_gameover;
 
     public DialogPage()
     {
@@ -19,6 +20,7 @@ public class DialogPage
 
         text = "Placeholder dialog";
         is_last = false;
+        is_gameover = false;
         reward = 0;
     }
 
@@ -66,5 +68,15 @@ public class DialogPage
     public double GetReward()
     {
         return reward;
+    }
+
+    public bool IsGameOver()
+    {
+        return is_gameover;
+    }
+
+    public void SetGameOver()
+    {
+        is_gameover = true;
     }
 }

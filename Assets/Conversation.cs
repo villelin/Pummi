@@ -122,7 +122,14 @@ public class Conversation : MonoBehaviour
 
     void DoneButtonClicked()
     {
-        // end this scene
-        SceneManager.LoadScene("basescene");
+        if (conversation_target.GetCurrentDialog().IsGameOver())
+        {
+            SceneManager.LoadScene("losescreen");
+        }
+        else
+        {
+            // go back to main scene
+            SceneManager.LoadScene("basescene");
+        }
     }
 }

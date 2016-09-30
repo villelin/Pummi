@@ -39,15 +39,19 @@ public class GameController : MonoBehaviour
         item_map.Add(GameObject.Find("Andrei"), Persistence.instance.iobjects["Andrei"]);
         item_map.Add(GameObject.Find("Lissu"), Persistence.instance.iobjects["Lissu"]);
         item_map.Add(GameObject.Find("Bush"), Persistence.instance.iobjects["Bush"]);
-        item_map.Add(GameObject.Find("Pullo1"), Persistence.instance.iobjects["Pullo1"]);
-        item_map.Add(GameObject.Find("Pullo2"), Persistence.instance.iobjects["Pullo2"]);
-        item_map.Add(GameObject.Find("Pullo3"), Persistence.instance.iobjects["Pullo3"]);
-        item_map.Add(GameObject.Find("Pullo4"), Persistence.instance.iobjects["Pullo4"]);
-        item_map.Add(GameObject.Find("Pullo5"), Persistence.instance.iobjects["Pullo5"]);
-        item_map.Add(GameObject.Find("Pullo6"), Persistence.instance.iobjects["Pullo6"]);
-        item_map.Add(GameObject.Find("Pullo7"), Persistence.instance.iobjects["Pullo7"]);
+        item_map.Add(GameObject.Find("Can1"), Persistence.instance.iobjects["Can1"]);
+        item_map.Add(GameObject.Find("Can2"), Persistence.instance.iobjects["Can2"]);
+        item_map.Add(GameObject.Find("Can3"), Persistence.instance.iobjects["Can3"]);
+        item_map.Add(GameObject.Find("Can4"), Persistence.instance.iobjects["Can4"]);
+        item_map.Add(GameObject.Find("Can5"), Persistence.instance.iobjects["Can5"]);
+        item_map.Add(GameObject.Find("Can6"), Persistence.instance.iobjects["Can6"]);
+        item_map.Add(GameObject.Find("Can7"), Persistence.instance.iobjects["Can7"]);
         item_map.Add(GameObject.Find("Metro"), Persistence.instance.iobjects["Metro"]);
         item_map.Add(GameObject.Find("ES"), Persistence.instance.iobjects["ES"]);
+        item_map.Add(GameObject.Find("Bottle1"), Persistence.instance.iobjects["Bottle1"]);
+        item_map.Add(GameObject.Find("Bottle2"), Persistence.instance.iobjects["Bottle2"]);
+        item_map.Add(GameObject.Find("Bottle3"), Persistence.instance.iobjects["Bottle3"]);
+        item_map.Add(GameObject.Find("Bottle4"), Persistence.instance.iobjects["Bottle4"]);
 
         Debug.Log("item_map = " + item_map);
 
@@ -55,8 +59,7 @@ public class GameController : MonoBehaviour
         
         background = GameObject.Find("StationBG").GetComponent<SpriteRenderer>();
 
-        Text cashtext = GameObject.Find("Cash").GetComponent<Text>();
-        cashtext.text = "€" + Persistence.instance.player.GetCash();
+        UpdateCash();
 
         Text speechtext = GameObject.Find("SpeechText").GetComponent<Text>();
         speechtext.text = "STEAL!";
@@ -108,7 +111,6 @@ public class GameController : MonoBehaviour
 
         // show objects based on location
         List<IInteractiveObject> objlist = location.GetObjects();
-
         foreach (IInteractiveObject obj in objlist)
         {
             foreach (KeyValuePair<GameObject, IInteractiveObject> item_pair in item_map)
@@ -116,7 +118,16 @@ public class GameController : MonoBehaviour
                 if (item_pair.Value == obj)
                 {
                     GameObject go = item_pair.Key;
-                    go.SetActive(true);
+
+                    if (item_pair.Value.GetType() == typeof(Bottle))
+                    {
+                        // bottle types can be visible or invisible
+                        go.SetActive(((Bottle)item_pair.Value).IsVisible());
+                    }
+                    else
+                    {
+                        go.SetActive(true);
+                    }
                 }
             }
         }
@@ -224,6 +235,12 @@ public class GameController : MonoBehaviour
         }
 	}
 
+    void UpdateCash()
+    {
+        Text cashtext = GameObject.Find("Cash").GetComponent<Text>();
+        cashtext.text = string.Format("{0:C2}", Persistence.instance.player.GetCash());
+    }
+
     // interact with a gameobject
     void Interact(GameObject obj)
     {
@@ -242,6 +259,12 @@ public class GameController : MonoBehaviour
                     {
                         // hide this object after it's looted
                         obj.SetActive(false);
+
+                        double cash = ((Bottle)item).GetCash();   
+
+                        Persistence.instance.player.AddCash(cash);
+
+                        UpdateCash();
                         break;
                     }
 
@@ -257,13 +280,31 @@ public class GameController : MonoBehaviour
 
                 case InteractType.Metro:
                     {
-                        SceneManager.LoadScene("winscreen");
+                        int inspector_rng = Random.RandomRange(0, 100);
+                        if (inspector_rng < 10)
+                        {
+                            // 10% chance for instant win
+                            SceneManager.LoadScene("winscreen");
+                        }
+                        else
+                        {
+                            // 90% chance for inspector
+                            Persistence.instance.conversation_target = (NPC)Persistence.instance.iobjects["Inspector"];
+
+                            // talk to inspector
+                            SaveGlobalState();
+                            SceneManager.LoadScene("conversation");
+                        }
                         break;
                     }
 
                 case InteractType.Bush:
                     {
-                        
+                        ((Bottle)Persistence.instance.iobjects["Bottle1"]).SetVisible(true);
+                        ((Bottle)Persistence.instance.iobjects["Bottle2"]).SetVisible(true);
+                        ((Bottle)Persistence.instance.iobjects["Bottle3"]).SetVisible(true);
+                        ((Bottle)Persistence.instance.iobjects["Bottle4"]).SetVisible(true);
+                        ChangeLocation(current_location);
                         break;
                     }
 
@@ -282,9 +323,6 @@ public class GameController : MonoBehaviour
         if (speech_target != null)
         {
             Interact(speech_target);
-
-            // reset the respawn timer
-            time = 0.0f;
         }
     }
 
