@@ -20,6 +20,8 @@ public class IntroController : MonoBehaviour {
 
     void StartButtonClicked()
     {
+        Persistence.instance.NewGame();
+
         SceneManager.LoadScene("basescene");
     }
 }

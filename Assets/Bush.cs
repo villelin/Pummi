@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Bottle : IInteractiveObject
+public class Bush : IInteractiveObject
 {
-    public Bottle()
+    public Bush()
     {
 
     }
@@ -15,6 +15,6 @@ public class Bottle : IInteractiveObject
 
     public InteractType GetInteractType()
     {
-        return InteractType.Lootable;
+        return InteractType.Bush;
     }
 }

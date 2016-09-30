@@ -47,6 +47,7 @@ public class GameController : MonoBehaviour
         item_map.Add(GameObject.Find("Pullo6"), Persistence.instance.iobjects["Pullo6"]);
         item_map.Add(GameObject.Find("Pullo7"), Persistence.instance.iobjects["Pullo7"]);
         item_map.Add(GameObject.Find("Metro"), Persistence.instance.iobjects["Metro"]);
+        item_map.Add(GameObject.Find("ES"), Persistence.instance.iobjects["ES"]);
 
         Debug.Log("item_map = " + item_map);
 
@@ -184,17 +185,38 @@ public class GameController : MonoBehaviour
                     // loot if we're close enough
                     if (diff.magnitude < 50.0f)
                     {
-                        //Loot(go);
-                        if (iobj.CanTalk())
+                        InteractType type = iobj.GetInteractType();
+
+                        Sprite target_sprite = go.GetComponent<SpriteRenderer>().sprite;
+                        
+                        if (iobj.GetInteractType() != InteractType.None)
                         {
-                            speech.transform.position = Camera.main.WorldToScreenPoint(go.transform.position - new Vector3(0, -80, 0));
+                            speech.transform.position = Camera.main.WorldToScreenPoint(go.transform.position) - new Vector3(0, -60, 0) ;
                             speech.SetActive(true);
 
                             Text speech_text = GameObject.Find("SpeechText").GetComponent<Text>();
-                            speech_text.text = "Talk";
-                        }
 
+                            switch (type)
+                            {
+                                case InteractType.Lootable:
+                                    speech_text.text = "Ota";
+                                    break;
+                                case InteractType.NPC:
+                                    speech_text.text = "Puhu";
+                                    break;
+                                case InteractType.Metro:
+                                    speech_text.text = "Mene metroon";
+                                    break;
+                                case InteractType.Bush:
+                                    speech_text.text = "Kähmi puskaa";
+                                    break;
+                                case InteractType.ES:
+                                    speech_text.text = "Tutki";
+                                    break;
+                            }
+                        }
                         speech_target = go;
+
                         break;
                     }
                 }
@@ -202,36 +224,55 @@ public class GameController : MonoBehaviour
         }
 	}
 
-    // loot a gameobject
-    void Loot(GameObject obj)
+    // interact with a gameobject
+    void Interact(GameObject obj)
     {
         if (obj != null)
         {
             // find item for this object
             IInteractiveObject item = item_map[obj];
-            if (item != null)
+
+            InteractType type = item.GetInteractType();
+
+            item.Interact(0);
+
+            switch (type)
             {
-            }
+                case InteractType.Lootable:
+                    {
+                        // hide this object after it's looted
+                        obj.SetActive(false);
+                        break;
+                    }
 
-            // hide this object after it's looted
-            if (item.CanLoot())
-            {
-                obj.SetActive(false);
-            }
+                case InteractType.NPC:
+                    {
+                        Persistence.instance.conversation_target = (NPC)item;
 
-            // update cash
-            Text cashtext = GameObject.Find("Cash").GetComponent<Text>();
-            cashtext.text = "€" + Persistence.instance.player.GetCash();
+                        // talk
+                        SaveGlobalState();
+                        SceneManager.LoadScene("conversation");
+                        break;
+                    }
 
-            if (item.CanTalk())
-            {
-                item.Interact(0);
+                case InteractType.Metro:
+                    {
+                        SceneManager.LoadScene("winscreen");
+                        break;
+                    }
 
-                Persistence.instance.conversation_target = (NPC)item;
+                case InteractType.Bush:
+                    {
+                        
+                        break;
+                    }
 
-                // talk
-                SaveGlobalState();
-                SceneManager.LoadScene("conversation");
+                case InteractType.ES:
+                    {
+                        SaveGlobalState();
+                        SceneManager.LoadScene("kallioquest");
+                        break;
+                    }
             }
         }
     }
@@ -240,7 +281,7 @@ public class GameController : MonoBehaviour
     {
         if (speech_target != null)
         {
-            Loot(speech_target);
+            Interact(speech_target);
 
             // reset the respawn timer
             time = 0.0f;

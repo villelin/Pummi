@@ -84,6 +84,12 @@ public class Conversation : MonoBehaviour
         }
 
         done_button.SetActive(page.IsLast());
+
+        if (page.GetReward() != 0)
+        {
+            // TODO: animation
+            Persistence.instance.player.AddCash(page.GetReward());
+        }
     }
 
     private void Answer(int answer)

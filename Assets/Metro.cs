@@ -13,13 +13,8 @@ public class Metro : IInteractiveObject
         return 0;
     }
 
-    public bool CanTalk()
+    public InteractType GetInteractType()
     {
-        return true;
-    }
-
-    public bool CanLoot()
-    {
-        return false;
+        return InteractType.Metro;
     }
 }

@@ -7,6 +7,7 @@ public class DialogPage
     private string[] reply = new string[4];
     private DialogPage[] reply_target = new DialogPage[4];
     private bool is_last;
+    private double reward;
 
     public DialogPage()
     {
@@ -18,6 +19,7 @@ public class DialogPage
 
         text = "Placeholder dialog";
         is_last = false;
+        reward = 0;
     }
 
     public string GetText()
@@ -54,5 +56,15 @@ public class DialogPage
     public void SetLast()
     {
         is_last = true;
+    }
+
+    public void SetReward(double amount)
+    {
+        reward = amount;
+    }
+
+    public double GetReward()
+    {
+        return reward;
     }
 }

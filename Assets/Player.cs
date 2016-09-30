@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Player
 {
-    private int cash;
+    private double cash;
     private int location;
     private Vector2 position;
 
@@ -14,14 +14,14 @@ public class Player
         position = new Vector2(400, 100);
     }
 
-    public void AddCash(int amount)
+    public void AddCash(double amount)
     {
         cash += amount;
-        if (cash < 0)
-            cash = 0;
+        if (cash < 0.0)
+            cash = 0.0;
     }
 
-    public int GetCash()
+    public double GetCash()
     {
         return cash;
     }

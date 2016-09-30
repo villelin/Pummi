@@ -37,10 +37,12 @@ public class Andrei : NPC
 // Andrei antaa 20e:
         page5.SetText("...ensin puukottaa liikekumppanit selkään, vaikka monenmoista jeesiä hänelle tarjosin ja koulutin kuule sen pikkuvesselistä alalle, oli mulle kuin oma poika.. Ja vaimokin saamari läx sen matkaan ja koirakin perkele karkasi… Kuulee… Sinä.. Pate? Sinä oot kuule hyvä jätkä, Pate! Ota kuule tästä, saat kakskymppiä!");
         page5.SetLast();
+        page5.SetReward(20.0);
 
 // Andrei ryöstää:
         page6.SetText("JUMANSVIIDU MIKÄ MIELISTELIJÄ! RAHAT TÄNNE");
         page6.SetLast();
+        page6.SetReward(-100000000000000.0);
 
         AdvanceDialog(page1);
     }

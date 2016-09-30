@@ -34,6 +34,7 @@ public class Lissu : NPC
 
 		page4.SetText("Käytit neljästä eurosta kolme, sinulle jää euro!");
 		page4.SetLast();
+        page4.SetReward(1);
 
 		page5.SetText("Otit pissiksen rahat, muttet ostanut tälle siideriä. Onnittelut, sait 4 euroa!");
 		page5.SetLast();

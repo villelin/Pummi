@@ -42,13 +42,11 @@ public class NPC : IInteractiveObject
         return 0;
     }
 
-    public bool CanTalk()
+    public InteractType GetInteractType()
     {
-        return talked_to != true;
-    }
-
-    public bool CanLoot()
-    {
-        return false;
+        if (talked_to)
+            return InteractType.None;
+        else
+            return InteractType.NPC;
     }
 }
