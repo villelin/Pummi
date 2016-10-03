@@ -22,6 +22,7 @@ public class ConversationController : MonoBehaviour
 
     private float cash_bonus_timer;
     private const float cash_bonus_duration = 3.0f;
+    private bool cash_bonus_negative;
 
 	// Use this for initialization
 	void Start ()
@@ -77,7 +78,11 @@ public class ConversationController : MonoBehaviour
 
 
             float pos = Mathf.Max(cash_bonus_timer / cash_bonus_duration, 0.0f);
-            cash_bonus_text.color = new Color(0.0f, 1.0f, 0.0f, pos);
+
+            if (cash_bonus_negative)
+                cash_bonus_text.color = new Color(1.0f, 0.0f, 0.0f, pos);
+            else
+                cash_bonus_text.color = new Color(0.0f, 1.0f, 0.0f, pos);
 
             cash_bonus.transform.localPosition = new Vector3(0, -150 + ((1.0f - pos) * 300.0f), 0);
         }
@@ -141,12 +146,18 @@ public class ConversationController : MonoBehaviour
         {
             double reward = page.GetReward();
 
+            cash_bonus_timer = cash_bonus_duration;
+            cash_bonus.SetActive(true);
+
             if (reward > 0.0)
             {
-                cash_bonus_timer = cash_bonus_duration;
-                cash_bonus.SetActive(true);
-
-                cash_bonus_text.text = string.Format("+€ {0:0.00}", page.GetReward());
+                cash_bonus_text.text = string.Format("+€ {0:0.00}", reward);
+                cash_bonus_negative = false;
+            }
+            else
+            {
+                cash_bonus_text.text = "MENETIT KAIKEN!";
+                cash_bonus_negative = true;
             }
 
             Persistence.instance.player.AddCash(reward);

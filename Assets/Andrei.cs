@@ -41,7 +41,7 @@ public class Andrei : NPC
 // Andrei ryöstää:
         page6.SetText("JUMANSVIIDU MIKÄ MIELISTELIJÄ! RAHAT TÄNNE");
         page6.SetLast();
-        page6.SetReward(-100000000000000.0);
+        page6.SetReward(-float.MaxValue);
 
         AdvanceDialog(page1);
     }

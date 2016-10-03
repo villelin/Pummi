@@ -183,7 +183,7 @@ public class GameController : MonoBehaviour
                 }
             }
 
-            Vector3 patepos = pate.transform.position;
+            Vector3 patepos = pate.transform.localPosition;
 
             speech.SetActive(false);
             speech_target = null;
@@ -196,39 +196,36 @@ public class GameController : MonoBehaviour
                 // only handle objects that are active
                 if (go.activeSelf)
                 {
-                    Vector3 gopos = go.transform.position;
+                    Vector3 gopos = go.transform.localPosition;
 
                     Vector3 diff = gopos - patepos;
+                    InteractType type = iobj.GetInteractType();
+
                     // loot if we're close enough
-                    if (diff.magnitude < 50.0f)
+                    if (iobj.GetInteractType() != InteractType.None && diff.magnitude < 50.0f)
                     {
-                        InteractType type = iobj.GetInteractType();
+                        speech.transform.position = Camera.main.WorldToScreenPoint(go.transform.position) - new Vector3(0, -60, 0) ;
+                        speech.SetActive(true);
 
-                        if (iobj.GetInteractType() != InteractType.None)
+                        Text speech_text = GameObject.Find("SpeechText").GetComponent<Text>();
+
+                        switch (type)
                         {
-                            speech.transform.position = Camera.main.WorldToScreenPoint(go.transform.position) - new Vector3(0, -60, 0) ;
-                            speech.SetActive(true);
-
-                            Text speech_text = GameObject.Find("SpeechText").GetComponent<Text>();
-
-                            switch (type)
-                            {
-                                case InteractType.Lootable:
-                                    speech_text.text = "Ota";
-                                    break;
-                                case InteractType.NPC:
-                                    speech_text.text = "Puhu";
-                                    break;
-                                case InteractType.Metro:
-                                    speech_text.text = "Mene metroon";
-                                    break;
-                                case InteractType.Bush:
-                                    speech_text.text = "Kähmi puskaa";
-                                    break;
-                                case InteractType.ES:
-                                    speech_text.text = "Tutki ES-tölkkiä";
-                                    break;
-                            }
+                            case InteractType.Lootable:
+                                speech_text.text = "Ota";
+                                break;
+                            case InteractType.NPC:
+                                speech_text.text = "Puhu";
+                                break;
+                            case InteractType.Metro:
+                                speech_text.text = "Mene metroon";
+                                break;
+                            case InteractType.Bush:
+                                speech_text.text = "Kähmi puskaa";
+                                break;
+                            case InteractType.ES:
+                                speech_text.text = "Tutki ES-tölkkiä";
+                                break;
                         }
                         speech_target = go;
 
