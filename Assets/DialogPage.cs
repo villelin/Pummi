@@ -9,6 +9,7 @@ public class DialogPage
     private string[] reply = new string[4];
     private DialogPage[] reply_target = new DialogPage[4];
     private bool is_last;
+    private string done_text;
     private double reward;
     private bool is_gameover;
     private DialogPageImage image;
@@ -22,6 +23,7 @@ public class DialogPage
         }
 
         text = "Placeholder dialog";
+        done_text = "DONE";
         is_last = false;
         is_gameover = false;
         reward = 0;
@@ -43,6 +45,11 @@ public class DialogPage
         return reply[index];
     }
 
+    public string GetDoneText()
+    {
+        return done_text;
+    }
+
     public DialogPage GetReplyTarget(int index)
     {
         return reply_target[index];
@@ -59,9 +66,10 @@ public class DialogPage
         return is_last;
     }
 
-    public void SetLast()
+    public void SetLast(string text)
     {
         is_last = true;
+        done_text = text;
     }
 
     public void SetReward(double amount)

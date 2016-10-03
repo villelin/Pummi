@@ -30,7 +30,7 @@ public class Martta : NPC
         page2.SetReply(1, "Älä sinä akka mäkätä siinä!", page3);
 
         page3.SetText("Kuinka julkeat! Mene matkoihisi, senkin haisuli!");
-        page3.SetLast();
+        page3.SetLast("Okei...");
 
         page4.SetText("Vai sillä tavalla.. Mitä se metroonpääsy auttaa?");
         page4.SetReply(0, "Auttaahan se elämässä eteenpäin...", page5);
@@ -38,14 +38,14 @@ public class Martta : NPC
         page4.SetReply(3, "Menen ostamaan viinaa", page7);
 
         page5.SetText("No... Ota tästä 50 senttiä...");
-        page5.SetLast();
+        page5.SetLast("JES!");
         page5.SetReward(0.5);
 
         page6.SetText("Pyh! Ja valehteletkin vielä, senkin juoppo! Mene matkoihisi!");
-        page6.SetLast();
+        page6.SetLast("Okei...");
 
         page7.SetText("No.. Olet ainakin rehellinen.. Ota tästä 2 euroa");
-        page7.SetLast();
+        page7.SetLast("JES!");
         page7.SetReward(2.0);
 
         AdvanceDialog(page1);

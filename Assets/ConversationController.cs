@@ -142,6 +142,13 @@ public class ConversationController : MonoBehaviour
 
         done_button.SetActive(page.IsLast());
 
+        if (page.IsLast())
+        {
+            Text done_text = GameObject.Find("DoneButtonText").GetComponent<Text>();
+            done_text.text = page.GetDoneText();
+        }
+
+
         if (page.GetReward() != 0)
         {
             double reward = page.GetReward();
