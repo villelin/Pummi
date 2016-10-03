@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Player
 {
     private double cash;
-    private int location;
+    private Location location;
     private Vector2 position;
     private bool es_buff;
 
@@ -28,12 +28,12 @@ public class Player
         return cash;
     }
 
-    public void SetLocation(int new_location)
+    public void SetLocation(Location new_location)
     {
         location = new_location;
     }
 
-    public int GetLocation()
+    public Location GetLocation()
     {
         return location;
     }

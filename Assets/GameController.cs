@@ -18,10 +18,10 @@ public class GameController : MonoBehaviour
     private GameObject stationbg;
 
     int sw = 0;
-    int current_location;
+    Location current_location;
 
     bool transition_active;
-    int transition_target;
+    Location transition_target;
     float transition_in_timer;
     float transition_out_timer;
     float fade_level;
@@ -85,27 +85,24 @@ public class GameController : MonoBehaviour
         parkbg = GameObject.Find("ParkBG");
         stationbg = GameObject.Find("StationBG");
 
-        ChangeLocation(0);
+        ChangeLocation(Persistence.instance.station);
 
         LoadGlobalState(); 
     }
 
 	// Change current location, hides/shows objects based on location
 	// 0 = station, 1 = park
-	void ChangeLocation(int new_location)
+	void ChangeLocation(Location new_location)
 	{
         current_location = new_location;
 
-        Location location;
-        if (new_location == 0)
+        if (current_location.GetBackground() == 0)
         {
-            location = Persistence.instance.station;
             parkbg.SetActive(false);
             stationbg.SetActive(true);
         }
         else
         {
-            location = Persistence.instance.park;
             parkbg.SetActive(true);
             stationbg.SetActive(false);
         }
@@ -118,7 +115,7 @@ public class GameController : MonoBehaviour
         }
 
         // show objects based on location
-        List<IInteractiveObject> objlist = location.GetObjects();
+        List<IInteractiveObject> objlist = current_location.GetObjects();
         foreach (IInteractiveObject obj in objlist)
         {
             foreach (KeyValuePair<GameObject, IInteractiveObject> item_pair in item_map)
@@ -206,8 +203,6 @@ public class GameController : MonoBehaviour
                     {
                         InteractType type = iobj.GetInteractType();
 
-                        Sprite target_sprite = go.GetComponent<SpriteRenderer>().sprite;
-                        
                         if (iobj.GetInteractType() != InteractType.None)
                         {
                             speech.transform.position = Camera.main.WorldToScreenPoint(go.transform.position) - new Vector3(0, -60, 0) ;
@@ -246,7 +241,7 @@ public class GameController : MonoBehaviour
     void UpdateCash()
     {
         Text cashtext = GameObject.Find("Cash").GetComponent<Text>();
-        cashtext.text = "Rahaa: " + Persistence.instance.player.GetCash().ToString("C2", CultureInfo.CreateSpecificCulture("fi-FI"));
+        cashtext.text = string.Format("Rahat: {0:0.00} €", Persistence.instance.player.GetCash());
     }
 
     // interact with a gameobject
@@ -290,9 +285,10 @@ public class GameController : MonoBehaviour
                 case InteractType.Metro:
                     {
                         int inspector_rng = Random.Range(0, 100);
+
+                        // win the game if we have at least 5 euros or 10% random chance for no inspector
                         if (Persistence.instance.player.GetCash() >= 5.0 || inspector_rng < 10)
                         {
-                            // 10% chance for instant win
                             SceneManager.LoadScene("winscreen");
                         }
                         else
@@ -335,7 +331,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    void StartTransition(int location)
+    void StartTransition(Location location)
     {
         transition_target = location;
         transition_in_timer = 1.0f;
@@ -368,11 +364,13 @@ public class GameController : MonoBehaviour
         Persistence.instance.player.SetLocation(current_location);
     }
 
-    void LocationTrigger()
+    void LeftExitTrigger()
     {
-        if (current_location == 0)
-            StartTransition(1);
-        else
-            StartTransition(0);
+        StartTransition(current_location.GetLeftExit());
+    }
+
+    void RightExitTrigger()
+    {
+        StartTransition(current_location.GetRightExit());
     }
 }

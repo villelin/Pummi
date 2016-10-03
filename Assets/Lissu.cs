@@ -10,7 +10,7 @@ public class Lissu : NPC
 	DialogPage page5;
 	DialogPage page6;
 
-	public Lissu()
+	public Lissu() : base("Lissu")
 	{
 		page1 = new DialogPage();
 		page2 = new DialogPage();

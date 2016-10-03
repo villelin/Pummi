@@ -5,7 +5,7 @@ public class Inspector : NPC
 {
     private DialogPage page1;
 
-    public Inspector()
+    public Inspector() : base("Lipuntarkastaja")
     {
         page1 = new DialogPage();
 

@@ -9,7 +9,7 @@ public class Andrei : NPC
     DialogPage page5;
     DialogPage page6;
 
-    public Andrei()
+    public Andrei() : base("Andrei")
     {
         page1 = new DialogPage();
         page2 = new DialogPage();

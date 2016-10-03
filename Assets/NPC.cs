@@ -6,14 +6,16 @@ public class NPC : IInteractiveObject
 {
     private bool talked_to;
     protected int reward_cash;
+    protected string name;
 
     protected DialogPage current_dialog;
 
-    public NPC()
+    public NPC(string name)
     {
         this.talked_to = false;
 
         current_dialog = null;
+        this.name = name;
     }
 
 
@@ -48,5 +50,10 @@ public class NPC : IInteractiveObject
             return InteractType.None;
         else
             return InteractType.NPC;
+    }
+
+    public string GetName()
+    {
+        return name;
     }
 }

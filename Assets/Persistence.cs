@@ -32,8 +32,15 @@ public class Persistence : MonoBehaviour
     public void NewGame()
     {
         player = new Player();
-        station = new Location();
-        park = new Location();
+        station = new Location(0);
+        park = new Location(1);
+
+        station.SetLeftExit(park);
+        station.SetRightExit(park);
+        park.SetLeftExit(station);
+        park.SetRightExit(station);
+
+        player.SetLocation(station);
 
         iobjects = new Dictionary<string, IInteractiveObject>();
         iobjects.Add("Andrei", new Andrei());

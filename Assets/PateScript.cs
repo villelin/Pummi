@@ -110,11 +110,13 @@ public class PateScript : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.name == "LeftLocationTrigger" ||
-            collider.name == "RightLocationTrigger")
+        if (collider.name == "LeftLocationTrigger")
         {
-            Debug.Log("triggered");
-            game_controller.SendMessage("LocationTrigger");
+            game_controller.SendMessage("LeftExitTrigger");
+        }
+        else if (collider.name == "RightLocationTrigger")
+        {
+            game_controller.SendMessage("RightExitTrigger");
         }
     }
 }
