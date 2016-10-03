@@ -169,6 +169,8 @@ public class ConversationController : MonoBehaviour
 
             Persistence.instance.player.AddCash(reward);
         }
+
+        GameObject.Find("SpeechAudio").GetComponent<AudioSource>().Play();
     }
 
     private void Answer(int answer)

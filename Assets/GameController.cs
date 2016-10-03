@@ -95,6 +95,20 @@ public class GameController : MonoBehaviour
 	// 0 = station, 1 = park
 	void ChangeLocation(Location new_location)
 	{
+        if (current_location != new_location)
+        {
+            if (new_location.GetBackground() == 0)
+            {
+                GameObject.Find("StationMusic").GetComponent<AudioSource>().Play();
+                GameObject.Find("ParkMusic").GetComponent<AudioSource>().Stop();
+            }
+            else
+            {
+                GameObject.Find("StationMusic").GetComponent<AudioSource>().Stop();
+                GameObject.Find("ParkMusic").GetComponent<AudioSource>().Play();
+            }
+        }
+
         current_location = new_location;
 
         if (current_location.GetBackground() == 0)
