@@ -11,12 +11,12 @@ public class Andrei : NPC
 
     public Andrei() : base("Andrei")
     {
-        page1 = new DialogPage();
-        page2 = new DialogPage();
-        page3 = new DialogPage();
-        page4 = new DialogPage();
-		page5 = new DialogPage();
-		page6 = new DialogPage();
+        page1 = new DialogPage(DialogPageImage.Andrei);
+        page2 = new DialogPage(DialogPageImage.Andrei);
+        page3 = new DialogPage(DialogPageImage.Andrei);
+        page4 = new DialogPage(DialogPageImage.Andrei);
+		page5 = new DialogPage(DialogPageImage.Andrei);
+		page6 = new DialogPage(DialogPageImage.AndreiAngry);
 
         page1.SetText("Jahashh... Mikässhh miässh she shinä olethh?");
         page1.SetReply(0, "Pate vaan, tarvin rahaa", page2);
@@ -30,7 +30,7 @@ public class Andrei : NPC
         page3.SetReply(1, "Jatka kuuntelua", page5);
         page3.SetReply(3, "Sano jotain myötätuntoista", page6);
 
-        page4.SetText("Et saanut rahaa :(");
+        page4.SetText("Et saanut rahaa");
         page4.SetLast();
 
 // Andrei antaa 20e:

@@ -12,13 +12,13 @@ public class Lissu : NPC
 
 	public Lissu() : base("Lissu")
 	{
-		page1 = new DialogPage();
-		page2 = new DialogPage();
-		page3 = new DialogPage();
-		page4 = new DialogPage();
-		page5 = new DialogPage();
-		page5 = new DialogPage();
-		page6 = new DialogPage();
+		page1 = new DialogPage(DialogPageImage.Lissu);
+		page2 = new DialogPage(DialogPageImage.Lissu);
+		page3 = new DialogPage(DialogPageImage.Lissu);
+		page4 = new DialogPage(DialogPageImage.Lissu);
+		page5 = new DialogPage(DialogPageImage.Lissu);
+		page5 = new DialogPage(DialogPageImage.Lissu);
+		page6 = new DialogPage(DialogPageImage.Lissu);
 
 		page1.SetText("Hyi... Joku spuge...");
 		page1.SetReply(0, "Pate vaan, tarvin rahaa", page3);

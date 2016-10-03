@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum DialogPageImage { Andrei, AndreiAngry, Lissu, Inspector, Martta }; 
+
 public class DialogPage
 {
     private string text;
@@ -9,8 +11,9 @@ public class DialogPage
     private bool is_last;
     private double reward;
     private bool is_gameover;
+    private DialogPageImage image;
 
-    public DialogPage()
+    public DialogPage(DialogPageImage image)
     {
         for (int i=0; i < 4; i++)
         {
@@ -22,6 +25,7 @@ public class DialogPage
         is_last = false;
         is_gameover = false;
         reward = 0;
+        this.image = image;
     }
 
     public string GetText()
@@ -78,5 +82,10 @@ public class DialogPage
     public void SetGameOver()
     {
         is_gameover = true;
+    }
+
+    public DialogPageImage GetImage()
+    {
+        return image;
     }
 }

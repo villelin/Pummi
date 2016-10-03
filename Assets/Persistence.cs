@@ -45,6 +45,7 @@ public class Persistence : MonoBehaviour
         iobjects = new Dictionary<string, IInteractiveObject>();
         iobjects.Add("Andrei", new Andrei());
         iobjects.Add("Lissu", new Lissu());
+        iobjects.Add("Martta", new Martta());
         iobjects.Add("Bush", new Bush());
         iobjects.Add("Can1", new Bottle(0.1));
         iobjects.Add("Can2", new Bottle(0.1));
@@ -97,6 +98,7 @@ public class Persistence : MonoBehaviour
 
         station.AddObject(iobjects["Andrei"]);
         station.AddObject(iobjects["Lissu"]);
+        station.AddObject(iobjects["Martta"]);
         station.AddObject(iobjects["Metro"]);
         station.AddObject(iobjects["ES"]);
 

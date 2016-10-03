@@ -39,6 +39,7 @@ public class GameController : MonoBehaviour
 
         item_map.Add(GameObject.Find("Andrei"), Persistence.instance.iobjects["Andrei"]);
         item_map.Add(GameObject.Find("Lissu"), Persistence.instance.iobjects["Lissu"]);
+        item_map.Add(GameObject.Find("Martta"), Persistence.instance.iobjects["Martta"]);
         item_map.Add(GameObject.Find("Bush"), Persistence.instance.iobjects["Bush"]);
         item_map.Add(GameObject.Find("Can1"), Persistence.instance.iobjects["Can1"]);
         item_map.Add(GameObject.Find("Can2"), Persistence.instance.iobjects["Can2"]);

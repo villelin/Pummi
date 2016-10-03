@@ -11,6 +11,12 @@ public class ConversationController : MonoBehaviour
     GameObject[] reply_button = new GameObject[4];
     Text[] reply_text = new Text[4];
 
+    GameObject andrei_image;
+    GameObject andrei_angry_image;
+    GameObject lissu_image;
+    GameObject inspector_image;
+    GameObject martta_image;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -33,19 +39,16 @@ public class ConversationController : MonoBehaviour
         done_button = GameObject.Find("DoneButton");
         done_button.GetComponent<Button>().onClick.AddListener(() => { DoneButtonClicked(); });
 
+        lissu_image = GameObject.Find("LissuImage");
+        andrei_image = GameObject.Find("AndreiImage");
+        andrei_angry_image = GameObject.Find("AndreiAngryImage");
+        inspector_image = GameObject.Find("InspectorImage");
+        martta_image = GameObject.Find("MarttaImage");
+
         conversation_target = Persistence.instance.conversation_target;
 
         if (conversation_target != null)
-        {
-
-            GameObject lissu_image = GameObject.Find("LissuImage");
-            lissu_image.SetActive(conversation_target.GetType() == typeof(Lissu));
-            GameObject andrei_image = GameObject.Find("AndreiImage");
-            andrei_image.SetActive(conversation_target.GetType() == typeof(Andrei));
-            GameObject inspector_image = GameObject.Find("InspectorImage");
-            inspector_image.SetActive(conversation_target.GetType() == typeof(Inspector));
-
-        
+        {        
             SetDialog(conversation_target.GetCurrentDialog());
 
             Text char_name = GameObject.Find("CharacterName").GetComponent<Text>();
@@ -66,6 +69,7 @@ public class ConversationController : MonoBehaviour
         string intro = Persistence.instance.conversation_target.GetCurrentDialog().GetText();
         convtext.text = page.GetText();
 
+        // show or hide reply buttons based on the dialogue
         for (int i=0; i < 4; i++)
         {
             DialogPage target = page.GetReplyTarget(i);
@@ -80,6 +84,35 @@ public class ConversationController : MonoBehaviour
                 reply_text[i].text = "";
             }
         }
+
+        // hide all images by default
+        lissu_image.SetActive(false);
+        andrei_image.SetActive(false);
+        andrei_angry_image.SetActive(false);
+        inspector_image.SetActive(false);
+        martta_image.SetActive(false);
+
+        // show image for this page
+        DialogPageImage image = conversation_target.GetCurrentDialog().GetImage();
+        switch (image)
+        {
+            case DialogPageImage.Andrei:
+                andrei_image.SetActive(true);
+                break;
+            case DialogPageImage.AndreiAngry:
+                andrei_angry_image.SetActive(true);
+                break;
+            case DialogPageImage.Lissu:
+                lissu_image.SetActive(true);
+                break;
+            case DialogPageImage.Inspector:
+                inspector_image.SetActive(true);
+                break;
+            case DialogPageImage.Martta:
+                martta_image.SetActive(true);
+                break;
+        }
+       
 
         done_button.SetActive(page.IsLast());
 
