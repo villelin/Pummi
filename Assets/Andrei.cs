@@ -13,13 +13,13 @@ public class Andrei : NPC
 
     public Andrei() : base("Andrei")
     {
-        page1 = new DialogPage(DialogPageImage.Andrei);
-        page2 = new DialogPage(DialogPageImage.Andrei);
-        page3 = new DialogPage(DialogPageImage.Andrei);
-        page4 = new DialogPage(DialogPageImage.Andrei);
-		page5 = new DialogPage(DialogPageImage.Andrei);
-		page6 = new DialogPage(DialogPageImage.AndreiAngry);
-		page7 = new DialogPage (DialogPageImage.AndreiAngry);
+        page1 = new DialogPage(DialogPageImage.Andrei, "andrei_page1");
+        page2 = new DialogPage(DialogPageImage.Andrei, "andrei_page2");
+        page3 = new DialogPage(DialogPageImage.Andrei, "andrei_page3");
+        page4 = new DialogPage(DialogPageImage.Andrei, null);
+		page5 = new DialogPage(DialogPageImage.Andrei, "andrei_page5");
+		page6 = new DialogPage(DialogPageImage.AndreiAngry, "andrei_page6");
+		page7 = new DialogPage (DialogPageImage.AndreiAngry, "andrei_page6");
 
 		Random rnd = new Random();
 

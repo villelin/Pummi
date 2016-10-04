@@ -18,18 +18,18 @@ public class Martta : NPC
 
     public Martta() : base("Martta")
     {
-        page1 = new DialogPage(DialogPageImage.Martta);
-        page2 = new DialogPage(DialogPageImage.Martta);
-        page3 = new DialogPage(DialogPageImage.Martta);
-        page4 = new DialogPage(DialogPageImage.Martta);
-        page5 = new DialogPage(DialogPageImage.Martta);
-        page6 = new DialogPage(DialogPageImage.Martta);
-		page7 = new DialogPage(DialogPageImage.Martta);
+        page1 = new DialogPage(DialogPageImage.Martta, "martta_page1");
+        page2 = new DialogPage(DialogPageImage.Martta, "martta_page2");
+        page3 = new DialogPage(DialogPageImage.Martta, "martta_page3");
+        page4 = new DialogPage(DialogPageImage.Martta, "martta_page4");
+        page5 = new DialogPage(DialogPageImage.Martta, "martta_page5");
+        page6 = new DialogPage(DialogPageImage.Martta, "martta_page6");
+		page7 = new DialogPage(DialogPageImage.Martta, "martta_page7");
 
-		page8 = new DialogPage(DialogPageImage.Martta);
-		page9 = new DialogPage(DialogPageImage.Martta);
-		page10 = new DialogPage(DialogPageImage.Martta);
-		page11 = new DialogPage(DialogPageImage.Martta);
+		page8 = new DialogPage(DialogPageImage.Martta, "martta_page1");
+		page9 = new DialogPage(DialogPageImage.Martta, "martta_page9");
+		page10 = new DialogPage(DialogPageImage.Martta, "martta_page10");
+		page11 = new DialogPage(DialogPageImage.Martta, "martta_page11");
 
 		Random rnd = new Random();
 

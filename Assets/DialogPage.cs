@@ -2,7 +2,6 @@
 using System.Collections;
 
 public enum DialogPageImage { Andrei, AndreiAngry, Lissu, Inspector, Martta }; 
-public enum DialogPageAudio { Lissu_Page1, Lissu_Page2, Lissu_Page3, Lissu_Page6 };
 
 public class DialogPage
 {
@@ -14,8 +13,9 @@ public class DialogPage
     private double reward;
     private bool is_gameover;
     private DialogPageImage image;
+    private string audio;
 
-    public DialogPage(DialogPageImage image)
+    public DialogPage(DialogPageImage image, string audio)
     {
         for (int i=0; i < 4; i++)
         {
@@ -29,6 +29,7 @@ public class DialogPage
         is_gameover = false;
         reward = 0;
         this.image = image;
+        this.audio = audio;
     }
 
     public string GetText()
@@ -96,5 +97,10 @@ public class DialogPage
     public DialogPageImage GetImage()
     {
         return image;
+    }
+
+    public string GetAudio()
+    {
+        return audio;
     }
 }

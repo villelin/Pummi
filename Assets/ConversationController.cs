@@ -170,7 +170,14 @@ public class ConversationController : MonoBehaviour
             Persistence.instance.player.AddCash(reward);
         }
 
-        GameObject.Find("SpeechAudio").GetComponent<AudioSource>().Play();
+        string audio_file = page.GetAudio();
+        if (audio_file != null)
+        {
+            AudioSource audio_source = GameObject.Find("SpeechAudio").GetComponent<AudioSource>();
+            AudioClip clip = (AudioClip)Resources.Load(audio_file);
+            audio_source.clip = clip;
+            audio_source.Play();
+        }
     }
 
     private void Answer(int answer)

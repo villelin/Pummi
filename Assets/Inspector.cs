@@ -7,7 +7,7 @@ public class Inspector : NPC
 
     public Inspector() : base("Lipuntarkastaja")
     {
-        page1 = new DialogPage(DialogPageImage.Inspector);
+        page1 = new DialogPage(DialogPageImage.Inspector, null);
 
         page1.SetText("A WILD INSPECTOR APPEARS!\n\nHemmetin pummi. Nyt saat keppiä!");
         page1.SetLast("APUAAAA");
