@@ -3,8 +3,8 @@ using System.Collections;
 
 public class EscapeController : MonoBehaviour
 {
-    GameObject pate;
     GameObject inspector;
+    GameObject pate;
 
     float timer;
 
@@ -16,19 +16,18 @@ public class EscapeController : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        pate = GameObject.Find("Pate");
         inspector = GameObject.Find("Inspector");
 
         moving_right = false;
 
-        pate.SendMessage("SetPosition", new Vector2(pate_xright, 166.0f));
-        pate.SendMessage("SetTarget", new Vector2(pate_xleft, 166.0f));
+        GameObject.Find("Music").GetComponent<AudioSource>().Play();
+        pate = GameObject.Find("Pate");
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        Vector3 pate_pos = pate.transform.position;
+        Vector2 pate_pos = pate.transform.position;
 
         float inspector_xpos = 0;
         if (moving_right)
