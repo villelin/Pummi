@@ -14,15 +14,15 @@ public class Lissu : NPC
 
 	public Lissu() : base("Lissu")
 	{
-		page1 = new DialogPage(DialogPageImage.Lissu);
-		page2 = new DialogPage(DialogPageImage.Lissu);
-		page3 = new DialogPage(DialogPageImage.Lissu);
-		page4 = new DialogPage(DialogPageImage.Lissu);
-		page5 = new DialogPage(DialogPageImage.Lissu);
-		page5 = new DialogPage(DialogPageImage.Lissu);
-		page6 = new DialogPage(DialogPageImage.Lissu);
-		page7 = new DialogPage(DialogPageImage.Lissu);
-		page8 = new DialogPage(DialogPageImage.Lissu);
+		page1 = new DialogPage(DialogPageImage.Lissu, "lissu_page1");
+		page2 = new DialogPage(DialogPageImage.Lissu, "lissu_page2");
+		page3 = new DialogPage(DialogPageImage.Lissu, "lissu_page3");
+		page4 = new DialogPage(DialogPageImage.Lissu, null);
+		page5 = new DialogPage(DialogPageImage.Lissu, null);
+		page5 = new DialogPage(DialogPageImage.Lissu, null);
+		page6 = new DialogPage(DialogPageImage.Lissu, "lissu_page6");
+		page7 = new DialogPage(DialogPageImage.Lissu, "lissu_page1");
+		page8 = new DialogPage(DialogPageImage.Lissu, "lissu_page8");
 
 		Random rnd = new Random();
 
