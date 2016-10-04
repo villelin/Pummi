@@ -12,6 +12,7 @@ public class DialogPage
     private string done_text;
     private double reward;
     private bool is_gameover;
+    private bool is_escape;
     private DialogPageImage image;
     private string audio;
 
@@ -27,6 +28,7 @@ public class DialogPage
         done_text = "DONE";
         is_last = false;
         is_gameover = false;
+        is_escape = false;
         reward = 0;
         this.image = image;
         this.audio = audio;
@@ -92,6 +94,16 @@ public class DialogPage
     public void SetGameOver()
     {
         is_gameover = true;
+    }
+
+    public bool IsEscapeMiniGame()
+    {
+        return is_escape;
+    }
+
+    public void SetEscapeMiniGame()
+    {
+        is_escape = true;
     }
 
     public DialogPageImage GetImage()

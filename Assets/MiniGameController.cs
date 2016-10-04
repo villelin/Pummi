@@ -29,6 +29,8 @@ public class MiniGameController : MonoBehaviour {
 
         timer = 15.0f;
 
+        GameObject.Find("Music").GetComponent<AudioSource>().Play();
+
 	}
 
 	// Update is called once per frame

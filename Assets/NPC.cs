@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class NPC : IInteractiveObject
 {
     private bool talked_to;
-    protected int reward_cash;
     protected string name;
 
     protected DialogPage current_dialog;
@@ -27,11 +26,6 @@ public class NPC : IInteractiveObject
     public void AdvanceDialog(DialogPage target)
     {
         current_dialog = target;
-    }
-
-    public int GetRewardCash()
-    {
-        return reward_cash;
     }
 
 

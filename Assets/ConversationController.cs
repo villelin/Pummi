@@ -214,6 +214,10 @@ public class ConversationController : MonoBehaviour
         {
             SceneManager.LoadScene("losescreen");
         }
+        else if (conversation_target.GetCurrentDialog().IsEscapeMiniGame())
+        {
+            SceneManager.LoadScene("escape");
+        }
         else
         {
             // go back to main scene

@@ -29,6 +29,6 @@ public class LoseController : MonoBehaviour {
 
     void Button2Clicked()
     {
-        SceneManager.LoadScene("intro");
+        SceneManager.LoadScene("escape");
     }
 }

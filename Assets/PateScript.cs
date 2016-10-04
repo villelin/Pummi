@@ -72,8 +72,8 @@ public class PateScript : MonoBehaviour
 
         pate_physics.velocity = direction * speed;
 
-        if (Persistence.instance.player.HasESBuff())
-            pate_physics.velocity *= 3.0f;
+        ///if (Persistence.instance.player.HasESBuff())
+        ///    pate_physics.velocity *= 3.0f;
 
         
 		if (direction.x < 0.0f)
@@ -86,6 +86,7 @@ public class PateScript : MonoBehaviour
 
     void SetPosition(Vector2 pos)
     {
+        Debug.Log("SET POSITION " + pos);
         target_pos = pos;
 
         pate_physics.position = pos;
