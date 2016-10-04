@@ -2,6 +2,7 @@
 using System.Collections;
 
 public enum DialogPageImage { Andrei, AndreiAngry, Lissu, Inspector, Martta }; 
+public enum DialogPageAudio { Lissu_Page1, Lissu_Page2, Lissu_Page3, Lissu_Page6 };
 
 public class DialogPage
 {
