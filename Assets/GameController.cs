@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
@@ -74,7 +74,10 @@ public class GameController : MonoBehaviour
         speechtext.text = "STEAL!";
 
         Button sb = GameObject.Find("Speech").GetComponent<Button>();
-        sb.onClick.AddListener(()=> { SpeechButtonClicked(); });
+		sb.onClick.AddListener(()=> { SpeechButtonClicked(); });
+
+		Button quit = GameObject.Find("Quit").GetComponent<Button>();
+		quit.onClick.AddListener(()=> { QuitButtonClicked(); });
 
         speech = GameObject.Find("Speech");
         speech.SetActive(false);
@@ -90,6 +93,8 @@ public class GameController : MonoBehaviour
 
         LoadGlobalState(); 
     }
+
+
 
 	// Change current location, hides/shows objects based on location
 	// 0 = station, 1 = park
@@ -156,6 +161,9 @@ public class GameController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+
+
+
         time += Time.deltaTime;
 
         if (transition_in_timer > 0)
@@ -333,7 +341,12 @@ public class GameController : MonoBehaviour
                     }
             }
         }
-    }
+	}
+
+	void QuitButtonClicked()
+	{
+		Application.Quit ();
+	}
 
     void SpeechButtonClicked()
     {
