@@ -18,7 +18,7 @@ public class Ball : MonoBehaviour {
         }
         else if (col.name == "GameoverTrigger")
         {
-            SceneManager.LoadScene("losescreen");
+            SceneManager.LoadScene("gameover");
         }
         else if (col.name == "es")
         {

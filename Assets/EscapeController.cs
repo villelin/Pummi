@@ -44,7 +44,7 @@ public class EscapeController : MonoBehaviour
         pate_physics = GameObject.Find("Pate").GetComponent<Rigidbody2D>();
 
         lamp1 = GameObject.Find("Lamp1").GetComponent<Rigidbody2D>();
-        lamp1.velocity = new Vector2(-200.0f, 0.0f);
+        lamp1.velocity = new Vector2(-190.0f, 0.0f);
 
         metro1 = GameObject.Find("Metro1").GetComponent<Rigidbody2D>();
         metro1.velocity = new Vector2(-50.0f, 0.0f);
@@ -149,6 +149,6 @@ public class EscapeController : MonoBehaviour
 
     void HitTrigger()
     {
-        SceneManager.LoadScene("losescreen");
+        SceneManager.LoadScene("gameover");
     }
 }

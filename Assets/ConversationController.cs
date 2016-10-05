@@ -212,11 +212,11 @@ public class ConversationController : MonoBehaviour
     {
         if (conversation_target.GetCurrentDialog().IsGameOver())
         {
-            SceneManager.LoadScene("losescreen");
+            SceneManager.LoadScene("gameover");
         }
         else if (conversation_target.GetCurrentDialog().IsEscapeMiniGame())
         {
-            SceneManager.LoadScene("escape");
+            SceneManager.LoadScene("losescreen");
         }
         else
         {
