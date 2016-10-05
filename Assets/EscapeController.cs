@@ -10,6 +10,8 @@ public class EscapeController : MonoBehaviour
     Rigidbody2D pate_physics;
     Button jump_button;
 
+    Text timer_text;
+
     float timer;
 
     const float pate_xleft = -500.0f;
@@ -40,7 +42,7 @@ public class EscapeController : MonoBehaviour
         pate_physics = GameObject.Find("Pate").GetComponent<Rigidbody2D>();
 
         lamp1 = GameObject.Find("Lamp1").GetComponent<Rigidbody2D>();
-        lamp1.velocity = new Vector2(-190.0f, 0.0f);
+        lamp1.velocity = new Vector2(-180.0f, 0.0f);
 
         metro1 = GameObject.Find("Metro1").GetComponent<Rigidbody2D>();
         metro1.velocity = new Vector2(-50.0f, 0.0f);
@@ -52,6 +54,8 @@ public class EscapeController : MonoBehaviour
         jump_button.onClick.AddListener(() => { JumpButtonClicked(); });
 
         jump_button.image.color = new Color32(255, 64, 64, 255);
+
+        timer_text = GameObject.Find("TimerText").GetComponent<Text>();
 
         jump_cooldown_timer = 0;
         inspector_jump_cooldown_timer = 0;
@@ -78,6 +82,11 @@ public class EscapeController : MonoBehaviour
 
             inspector_animation_duration /= 1.4f;
         }
+
+        timer_text.text = string.Format("Aika pakoon: {0:0.00}s", 60.0f - total_timer);
+
+        float color_fade = Mathf.Abs(Mathf.Cos((total_timer / 10.0f) * 180.0f / Mathf.PI));
+        timer_text.color = new Color(1.0f, color_fade, 0.0f);
 
         if (total_timer >= 60.0f)
         {
