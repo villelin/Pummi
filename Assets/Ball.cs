@@ -23,6 +23,8 @@ public class Ball : MonoBehaviour {
         else if (col.name == "es")
         {
             Persistence.instance.player.SetESBuff();
+
+            SceneManager.LoadScene("esscreen");
         }
     }
 }
