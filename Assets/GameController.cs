@@ -311,6 +311,11 @@ public class GameController : MonoBehaviour
                         {
                             SceneManager.LoadScene("winscreen");
                         }
+
+			if ((Persistence.instance.player.HasESBuff () && inspector_rng < 20) || Persistence.instance.player.GetCash() >= 5.0) {
+			SceneManager.LoadScene("winscreen");
+			}
+
                         else
                         {
                             // 90% chance for inspector
