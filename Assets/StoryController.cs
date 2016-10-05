@@ -11,6 +11,8 @@ public class StoryController : MonoBehaviour
     {
         Button button = GameObject.Find("StartButton").GetComponent<Button>();
         button.onClick.AddListener(() => { StartButtonClicked(); });
+
+        GameObject.Find("StoryAudio").GetComponent<AudioSource>().Play();
     }
 	
 	// Update is called once per frame
@@ -21,6 +23,7 @@ public class StoryController : MonoBehaviour
 
     void StartButtonClicked()
     {
+        GameObject.Find("StoryAudio").GetComponent<AudioSource>().Stop();
         SceneManager.LoadScene("basescene");
     }
 }

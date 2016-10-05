@@ -75,7 +75,6 @@ public class PateScript : MonoBehaviour
         if (Persistence.instance.player.HasESBuff())
             pate_physics.velocity *= 3.0f;
 
-        
 		if (direction.x < 0.0f)
 			renderer.flipX = false;
 		else
