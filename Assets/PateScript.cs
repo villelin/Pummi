@@ -72,8 +72,8 @@ public class PateScript : MonoBehaviour
 
         pate_physics.velocity = direction * speed;
 
-        ///if (Persistence.instance.player.HasESBuff())
-        ///    pate_physics.velocity *= 3.0f;
+        if (Persistence.instance.player.HasESBuff())
+            pate_physics.velocity *= 3.0f;
 
         
 		if (direction.x < 0.0f)
