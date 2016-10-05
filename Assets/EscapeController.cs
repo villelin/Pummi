@@ -15,8 +15,6 @@ public class EscapeController : MonoBehaviour
     const float pate_xleft = -500.0f;
     const float pate_xright = 600.0f;
 
-    bool moving_right;
-
     float jump_cooldown_timer;
     float inspector_jump_cooldown_timer;
     float inspector_animation_timer;
@@ -35,8 +33,6 @@ public class EscapeController : MonoBehaviour
 	void Start ()
     {
         inspector = GameObject.Find("Inspector");
-
-        moving_right = false;
 
         GameObject.Find("Music").GetComponent<AudioSource>().Play();
         pate = GameObject.Find("Pate");
@@ -69,8 +65,6 @@ public class EscapeController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        Vector2 pate_pos = pate.transform.position;
-
         minigame_timer += Time.deltaTime;
         total_timer += Time.deltaTime;
         if (minigame_timer >= 15.0f)

@@ -92,7 +92,6 @@ public class ConversationController : MonoBehaviour
     {
         Text convtext = GameObject.Find("ConversationText").GetComponent<Text>();
 
-        string intro = Persistence.instance.conversation_target.GetCurrentDialog().GetText();
         convtext.text = page.GetText();
 
         // show or hide reply buttons based on the dialogue

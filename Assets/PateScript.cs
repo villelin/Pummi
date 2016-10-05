@@ -5,7 +5,6 @@ public class PateScript : MonoBehaviour
 {
     SpriteRenderer renderer;
     Vector2 target_pos;
-    GameObject target_object;
     GameObject game_controller;
     Rigidbody2D pate_physics;
     float angle;
@@ -21,8 +20,6 @@ public class PateScript : MonoBehaviour
 
         pate_physics = GameObject.Find("Pate").GetComponent<Rigidbody2D>();
 
-        target_object = null;
-
         walking = false;
 	}
 	
@@ -30,11 +27,7 @@ public class PateScript : MonoBehaviour
 	void Update ()
     {
         float angrad = angle * 180.0f / Mathf.PI;
-        float x = Mathf.Cos(angrad);
-        float y = Mathf.Sin(angrad);
-        //transform.localPosition = new Vector2(x, y);
-        //transform.localScale = new Vector3(0.1f + (Mathf.Abs(x) * 0.5f), 0.1f + (Mathf.Abs(x) * 0.5f), 1.0f);
-        
+
         angle += 0.008f;
 
         float walk_offset = 0.0f;

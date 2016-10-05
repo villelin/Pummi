@@ -17,7 +17,6 @@ public class GameController : MonoBehaviour
     private GameObject parkbg;
     private GameObject stationbg;
 
-    int sw = 0;
     Location current_location;
 
     bool transition_active;
