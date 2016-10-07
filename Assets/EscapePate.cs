@@ -19,6 +19,6 @@ public class EscapePate : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        escape_controller.SendMessage("HitTrigger");
+        escape_controller.SendMessage("HitTrigger", collider.name);
     }
 }

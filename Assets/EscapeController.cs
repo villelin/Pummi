@@ -7,6 +7,7 @@ public class EscapeController : MonoBehaviour
 {
     GameObject inspector;
     GameObject pate;
+    GameObject pate_sprite;
     Rigidbody2D pate_physics;
     Button jump_button;
 
@@ -26,10 +27,16 @@ public class EscapeController : MonoBehaviour
     Rigidbody2D metro1;
     Rigidbody2D metro2;
 
+    GameObject blood;
+
     Vector2 inspector_base_position = new Vector2(4, 181);
 
     float minigame_timer;
     float total_timer;
+    float gameover_timer;
+
+    bool spin;
+    float spin_timer;
 
 	// Use this for initialization
 	void Start ()
@@ -40,6 +47,7 @@ public class EscapeController : MonoBehaviour
         pate = GameObject.Find("Pate");
 
         pate_physics = GameObject.Find("Pate").GetComponent<Rigidbody2D>();
+        pate_sprite = GameObject.Find("PateSprite");
 
         lamp1 = GameObject.Find("Lamp1").GetComponent<Rigidbody2D>();
         lamp1.velocity = new Vector2(-180.0f, 0.0f);
@@ -57,6 +65,9 @@ public class EscapeController : MonoBehaviour
 
         timer_text = GameObject.Find("TimerText").GetComponent<Text>();
 
+        blood = GameObject.Find("Blood");
+        blood.SetActive(false);
+
         jump_cooldown_timer = 0;
         inspector_jump_cooldown_timer = 0;
         inspector_animation_timer = 0;
@@ -64,6 +75,10 @@ public class EscapeController : MonoBehaviour
 
         minigame_timer = 0;
         total_timer = 0;
+        gameover_timer = 0.0f;
+
+        spin = false;
+        spin_timer = 0.0f;
     }
 	
 	// Update is called once per frame
@@ -81,6 +96,21 @@ public class EscapeController : MonoBehaviour
             metro2.velocity *= 1.4f;
 
             inspector_animation_duration /= 1.4f;
+        }
+
+        if (gameover_timer > 0.0f)
+        {
+            gameover_timer -= Time.deltaTime;
+            if (gameover_timer <= 0.0f)
+            {
+                SceneManager.LoadScene("gameover");
+            }
+        }
+
+        if (spin)
+        {
+            spin_timer += Time.deltaTime;
+            pate_sprite.transform.rotation = Quaternion.Euler(0, 0, spin_timer * 360.0f);
         }
 
         timer_text.text = string.Format("Aika pakoon: {0:0.00}s", 60.0f - total_timer);
@@ -150,8 +180,21 @@ public class EscapeController : MonoBehaviour
         }
     }
 
-    void HitTrigger()
+    void HitTrigger(string collider)
     {
-        SceneManager.LoadScene("gameover");
+        if (collider == "FloorCollider")
+        {
+            Vector3 blood_pos = blood.transform.position;
+            Vector3 pate_pos = pate.transform.position;
+            blood.transform.position = new Vector3(pate_pos.x, blood_pos.y, blood_pos.z);
+
+            blood.SetActive(true);
+            gameover_timer = 1.5f;
+        }
+        else
+        {
+            spin = true;
+            gameover_timer = 1.5f;
+        }
     }
 }
