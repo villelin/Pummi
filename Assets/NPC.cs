@@ -8,6 +8,7 @@ public class NPC : IInteractiveObject
     protected string name;
 
     protected DialogPage current_dialog;
+    protected Dictionary<string, DialogPage> pages;
 
     public NPC(string name)
     {
@@ -15,6 +16,8 @@ public class NPC : IInteractiveObject
 
         current_dialog = null;
         this.name = name;
+
+        pages = new Dictionary<string, DialogPage>();
     }
 
 

@@ -19,6 +19,7 @@ public class EscapeController : MonoBehaviour
     const float pate_xright = 600.0f;
 
     float jump_cooldown_timer;
+    float jump_cooldown_duration;
     float inspector_jump_cooldown_timer;
     float inspector_animation_timer;
     float inspector_animation_duration;
@@ -34,6 +35,7 @@ public class EscapeController : MonoBehaviour
     float minigame_timer;
     float total_timer;
     float gameover_timer;
+    bool gameover;
 
     bool spin;
     float spin_timer;
@@ -69,6 +71,8 @@ public class EscapeController : MonoBehaviour
         blood.SetActive(false);
 
         jump_cooldown_timer = 0;
+        jump_cooldown_duration = 5.0f;
+
         inspector_jump_cooldown_timer = 0;
         inspector_animation_timer = 0;
         inspector_animation_duration = 5.0f;
@@ -79,6 +83,8 @@ public class EscapeController : MonoBehaviour
 
         spin = false;
         spin_timer = 0.0f;
+
+        gameover = false;
     }
 	
 	// Update is called once per frame
@@ -86,6 +92,8 @@ public class EscapeController : MonoBehaviour
     {
         minigame_timer += Time.deltaTime;
         total_timer += Time.deltaTime;
+
+        // speed increases by 40% every 15 seconds
         if (minigame_timer >= 15.0f)
         {
             minigame_timer = 0.0f;
@@ -96,6 +104,8 @@ public class EscapeController : MonoBehaviour
             metro2.velocity *= 1.4f;
 
             inspector_animation_duration /= 1.4f;
+
+            jump_cooldown_duration /= 1.4f;
         }
 
         if (gameover_timer > 0.0f)
@@ -118,7 +128,7 @@ public class EscapeController : MonoBehaviour
         float color_fade = Mathf.Abs(Mathf.Cos((total_timer / 10.0f) * 180.0f / Mathf.PI));
         timer_text.color = new Color(1.0f, color_fade, 0.0f);
 
-        if (total_timer >= 60.0f)
+        if (total_timer >= 60.0f && !gameover)
         {
             SceneManager.LoadScene("winscreen");
         }
@@ -174,7 +184,7 @@ public class EscapeController : MonoBehaviour
         if (jump_cooldown_timer <= 0.0f)
         {
             pate_physics.AddForce(new Vector2(0, 200.0f), ForceMode2D.Impulse);
-            jump_cooldown_timer = 5.0f;
+            jump_cooldown_timer = jump_cooldown_duration;
 
             jump_button.image.color = new Color32(160, 160, 160, 255);
         }
@@ -190,11 +200,13 @@ public class EscapeController : MonoBehaviour
 
             blood.SetActive(true);
             gameover_timer = 1.5f;
+            gameover = true;
         }
         else
         {
             spin = true;
             gameover_timer = 1.5f;
+            gameover = true;
         }
     }
 }

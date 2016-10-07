@@ -3,16 +3,14 @@ using System.Collections;
 
 public class Inspector : NPC
 {
-    private DialogPage page1;
-
     public Inspector() : base("Lipuntarkastaja")
     {
-        page1 = new DialogPage(DialogPageImage.Inspector, null);
+        pages.Add("page1", new DialogPage(DialogPageImage.Inspector, null));
 
-        page1.SetText("A WILD INSPECTOR APPEARS!\n\nHemmetin pummi. Nyt saat keppiä!");
-        page1.SetLast("OK");
-        page1.SetEscapeMiniGame();
+        pages["page1"].SetText("A WILD INSPECTOR APPEARS!\n\nHemmetin pummi. Nyt saat keppiä!");
+        pages["page1"].SetLast("OK");
+        pages["page1"].SetEscapeMiniGame();
 
-        AdvanceDialog(page1);
+        AdvanceDialog(pages["page1"]);
     }
 }

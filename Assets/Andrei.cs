@@ -1,25 +1,18 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Andrei : NPC
 {
-    DialogPage page1;
-    DialogPage page2;
-    DialogPage page3;
-    DialogPage page4;
-    DialogPage page5;
-	DialogPage page6;
-	DialogPage page7;
-
     public Andrei() : base("Andrei")
     {
-        page1 = new DialogPage(DialogPageImage.Andrei, "andrei_page1");
-        page2 = new DialogPage(DialogPageImage.Andrei, "andrei_page2");
-        page3 = new DialogPage(DialogPageImage.Andrei, "andrei_page3");
-        page4 = new DialogPage(DialogPageImage.Andrei, null);
-		page5 = new DialogPage(DialogPageImage.Andrei, "andrei_page5");
-		page6 = new DialogPage(DialogPageImage.AndreiAngry, "andrei_page6");
-		page7 = new DialogPage (DialogPageImage.AndreiAngry, "andrei_page6");
+        pages.Add("page1", new global::DialogPage(DialogPageImage.Andrei, "andrei_page1"));
+        pages.Add("page2", new global::DialogPage(DialogPageImage.Andrei, "andrei_page2"));
+        pages.Add("page3", new global::DialogPage(DialogPageImage.Andrei, "andrei_page3"));
+        pages.Add("page4", new global::DialogPage(DialogPageImage.Andrei, null));
+        pages.Add("page5", new global::DialogPage(DialogPageImage.Andrei, "andrei_page5"));
+        pages.Add("page6", new global::DialogPage(DialogPageImage.AndreiAngry, "andrei_page6"));
+        pages.Add("page7", new global::DialogPage(DialogPageImage.AndreiAngry, "andrei_page6"));
 
 		Random rnd = new Random();
 
@@ -28,39 +21,39 @@ public class Andrei : NPC
 		n = rnd.NextDouble ();
 
 		if (n < 0.4) {
-			page7.SetText ("JUMANSVIIDU MIKÄ MIELISTELIJÄ! RAHAT TÄNNE");
-			page7.SetLast ("APUAAA");
-			page7.SetReward (-float.MaxValue);
+			pages["page7"].SetText ("JUMANSVIIDU MIKÄ MIELISTELIJÄ! RAHAT TÄNNE");
+			pages["page7"].SetLast ("APUAAA");
+			pages["page7"].SetReward (-float.MaxValue);
 
-			AdvanceDialog (page7);
+			AdvanceDialog(pages["page7"]);
 
 		} else {
-			page1.SetText ("Jahashh... Mikässhh miässh she shinä olethh?");
-			page1.SetReply (0, "Pate vaan, tarvin rahaa", page2);
-			page1.SetReply (1, "Olen Pate, entäs sinä?", page3);
+			pages["page1"].SetText ("Jahashh... Mikässhh miässh she shinä olethh?");
+			pages["page1"].SetReply (0, "Pate vaan, tarvin rahaa", pages["page2"]);
+            pages["page1"].SetReply (1, "Olen Pate, entäs sinä?", pages["page3"]);
 
-			page2.SetText ("PAINU HIITEEN, PUMMI!");
-			page2.SetLast ("Okei...");
+            pages["page2"].SetText ("PAINU HIITEEN, PUMMI!");
+            pages["page2"].SetLast ("Okei...");
 
-			page3.SetText ("Voi että, et uskokaan, kun minulla on ollut niin rankkaa… Bisness pyöri ja elämä sujui.. Mutta nyt on kaikki kuviot kuule kusseet ja pahasti…");
-			page3.SetReply (0, "Lähde pois", page4);
-			page3.SetReply (1, "Jatka kuuntelua", page5);
-			page3.SetReply (3, "Sano jotain myötätuntoista", page6);
+            pages["page3"].SetText ("Voi että, et uskokaan, kun minulla on ollut niin rankkaa… Bisness pyöri ja elämä sujui.. Mutta nyt on kaikki kuviot kuule kusseet ja pahasti…");
+            pages["page3"].SetReply (0, "Lähde pois", pages["page4"]);
+            pages["page3"].SetReply (1, "Jatka kuuntelua", pages["page5"]);
+            pages["page3"].SetReply (3, "Sano jotain myötätuntoista", pages["page6"]);
 
-			page4.SetText ("Et saanut rahaa");
-			page4.SetLast ("HÖH");
+            pages["page4"].SetText ("Et saanut rahaa");
+            pages["page4"].SetLast ("HÖH");
 
-// Andrei antaa 20e:
-			page5.SetText ("...ensin puukottaa liikekumppanit selkään, vaikka monenmoista jeesiä hänelle tarjosin ja koulutin kuule sen pikkuvesselistä alalle, oli mulle kuin oma poika.. Ja vaimokin saamari läx sen matkaan ja koirakin perkele karkasi… Kuulee… Sinä.. Pate? Sinä oot kuule hyvä jätkä, Pate! Ota kuule tästä, saat kakskymppiä!");
-			page5.SetLast ("JES!");
-			page5.SetReward (20.0);
+            // Andrei antaa 20e:
+            pages["page5"].SetText ("...ensin puukottaa liikekumppanit selkään, vaikka monenmoista jeesiä hänelle tarjosin ja koulutin kuule sen pikkuvesselistä alalle, oli mulle kuin oma poika.. Ja vaimokin saamari läx sen matkaan ja koirakin perkele karkasi… Kuulee… Sinä.. Pate? Sinä oot kuule hyvä jätkä, Pate! Ota kuule tästä, saat kakskymppiä!");
+            pages["page5"].SetLast ("JES!");
+            pages["page5"].SetReward (20.0);
 
-// Andrei ryöstää:
-			page6.SetText ("JUMANSVIIDU MIKÄ MIELISTELIJÄ! RAHAT TÄNNE");
-			page6.SetLast ("APUAAA");
-			page6.SetReward (-float.MaxValue);
+            // Andrei ryöstää:
+            pages["page6"].SetText ("JUMANSVIIDU MIKÄ MIELISTELIJÄ! RAHAT TÄNNE");
+            pages["page6"].SetLast ("APUAAA");
+            pages["page6"].SetReward (-float.MaxValue);
 
-			AdvanceDialog (page1);
+			AdvanceDialog (pages["page1"]);
 		}
     }
 }
