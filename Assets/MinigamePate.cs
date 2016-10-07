@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class Ball : MonoBehaviour {
+public class MinigamePate : MonoBehaviour {
 
     GameObject blood;
     GameObject pate;
