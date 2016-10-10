@@ -148,8 +148,8 @@ public class EscapeController : MonoBehaviour
             BoxCollider2D metro1_box = metro1.GetComponent<BoxCollider2D>();
             BoxCollider2D metro2_box = metro2.GetComponent<BoxCollider2D>();
 
-            if (Mathf.Abs(metro1_box.bounds.max.x - insbox.bounds.max.x) < 1.0f ||
-                Mathf.Abs(metro2_box.bounds.max.x - insbox.bounds.max.x) < 1.0f)
+            if (Mathf.Abs(metro1_box.bounds.max.x - insbox.bounds.max.x) < 5.0f ||
+                Mathf.Abs(metro2_box.bounds.max.x - insbox.bounds.max.x) < 5.0f)
             {
                 inspector_jump_cooldown_timer = inspector_animation_duration;
                 inspector_animation_timer = inspector_animation_duration;
