@@ -55,6 +55,10 @@ public class PateScript : MonoBehaviour
         renderer.transform.position = transform.position - new Vector3(0, walk_offset, 0);
     }
 
+    /// <summary>
+    /// Gives Pate the command to start moving to the given position 
+    /// </summary>
+    /// <param name="pos">Target position</param>
     void SetTarget(Vector2 pos)
     {
         Debug.Log("SET TARGET " + pos);
@@ -76,6 +80,10 @@ public class PateScript : MonoBehaviour
         walking = true;
 	}
 
+    /// <summary>
+    /// Instantly sets a new position for Pate.
+    /// </summary>
+    /// <param name="pos">New position</param>
     void SetPosition(Vector2 pos)
     {
         Debug.Log("SET POSITION " + pos);
@@ -86,6 +94,9 @@ public class PateScript : MonoBehaviour
         walking = false;
     }
 
+    /// <summary>
+    /// Stops Pate's movement
+    /// </summary>
     void StopMoving()
     {
         target_pos = pate_physics.position;

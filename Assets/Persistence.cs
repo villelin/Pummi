@@ -29,6 +29,9 @@ public class Persistence : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Starts a new game. All variables and objects are reset to their default values.
+    /// </summary>
     public void NewGame()
     {
         player = new Player();

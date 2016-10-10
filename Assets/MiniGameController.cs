@@ -73,6 +73,9 @@ public class MiniGameController : MonoBehaviour {
 		}
 	}
 
+    /// <summary>
+    /// Called when Pate crashes to the bottom of the screen
+    /// </summary>
     void Crash()
     {
         gameover = true;

@@ -88,6 +88,10 @@ public class ConversationController : MonoBehaviour
         }
 	}
 
+    /// <summary>
+    /// Sets the visible dialog page
+    /// </summary>
+    /// <param name="page">DialogPage to show</param>
     void SetDialog(DialogPage page)
     {
         Text convtext = GameObject.Find("ConversationText").GetComponent<Text>();
@@ -179,6 +183,10 @@ public class ConversationController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Advances the conversation based on the answer number
+    /// </summary>
+    /// <param name="answer">Answer index in range 0...3</param>
     private void Answer(int answer)
     {
         DialogPage target = conversation_target.GetCurrentDialog().GetReplyTarget(answer);
@@ -187,26 +195,41 @@ public class ConversationController : MonoBehaviour
         SetDialog(target);
     }
 
+    /// <summary>
+    /// Called when Reply button 1 is clicked
+    /// </summary>
     void ReplyButton1Clicked()
     {
         Answer(0);
     }
 
+    /// <summary>
+    /// Called when Reply button 2 is clicked
+    /// </summary>
     void ReplyButton2Clicked()
     {
         Answer(1);
     }
 
+    /// <summary>
+    /// Called when Reply button 3 is clicked
+    /// </summary>
     void ReplyButton3Clicked()
     {
         Answer(2);
     }
 
+    /// <summary>
+    /// Called when Reply button 4 is clicked
+    /// </summary>
     void ReplyButton4Clicked()
     {
         Answer(3);
     }
 
+    /// <summary>
+    /// Called when Done Button is clicked
+    /// </summary>
     void DoneButtonClicked()
     {
         if (conversation_target.GetCurrentDialog().IsGameOver())

@@ -186,6 +186,9 @@ public class EscapeController : MonoBehaviour
         }*/
 	}
 
+    /// <summary>
+    /// Called when Jump button is clicked
+    /// </summary>
     void JumpButtonClicked()
     {
         if (jump_cooldown_timer <= 0.0f)
@@ -197,6 +200,10 @@ public class EscapeController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Called when Pate hits of the trigger colliders
+    /// </summary>
+    /// <param name="collider">Name of the collider</param>
     void HitTrigger(string collider)
     {
         if (collider == "FloorCollider")
@@ -221,6 +228,9 @@ public class EscapeController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Stops the movement of all objects
+    /// </summary>
     void StopGame()
     {
         metro1.velocity = new Vector3();

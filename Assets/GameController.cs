@@ -95,8 +95,10 @@ public class GameController : MonoBehaviour
 
 
 
-	// Change current location, hides/shows objects based on location
-	// 0 = station, 1 = park
+    /// <summary>
+    /// Change the current location
+    /// </summary>
+    /// <param name="new_location">Location to change to</param>
 	void ChangeLocation(Location new_location)
 	{
         if (current_location != new_location)
@@ -257,13 +259,19 @@ public class GameController : MonoBehaviour
         }
 	}
 
+    /// <summary>
+    /// Updates the player cash on screen
+    /// </summary>
     void UpdateCash()
     {
         Text cashtext = GameObject.Find("Cash").GetComponent<Text>();
         cashtext.text = string.Format("Rahat: {0:0.00} €", Persistence.instance.player.GetCash());
     }
 
-    // interact with a gameobject
+    /// <summary>
+    /// Interact with a GameObject
+    /// </summary>
+    /// <param name="obj">GameObject to interact with</param>
     void Interact(GameObject obj)
     {
         if (obj != null)
@@ -351,11 +359,18 @@ public class GameController : MonoBehaviour
         }
 	}
 
+
+    /// <summary>
+    /// Called when Quit button is clicked
+    /// </summary>
 	void QuitButtonClicked()
 	{
 		Application.Quit ();
 	}
 
+    /// <summary>
+    /// Called when the Speech Bubble is clicked
+    /// </summary>
     void SpeechButtonClicked()
     {
         if (speech_target != null)
@@ -364,6 +379,10 @@ public class GameController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Starts a transition to a new location
+    /// </summary>
+    /// <param name="location">Location to move to</param>
     void StartTransition(Location location)
     {
         transition_target = location;
@@ -381,6 +400,9 @@ public class GameController : MonoBehaviour
         GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Texture2D.whiteTexture);
     }
 
+    /// <summary>
+    /// Loads Pate's position and location from persistent storage
+    /// </summary>
     void LoadGlobalState()
     {
         Vector2 pate_pos = Persistence.instance.player.GetPosition();
@@ -390,6 +412,9 @@ public class GameController : MonoBehaviour
         ChangeLocation(Persistence.instance.player.GetLocation());
     }
 
+    /// <summary>
+    /// Saves Pate's position and location to persistent storage
+    /// </summary>
     void SaveGlobalState()
     {
         Vector2 pate_pos = pate.transform.position;
@@ -397,11 +422,17 @@ public class GameController : MonoBehaviour
         Persistence.instance.player.SetLocation(current_location);
     }
 
+    /// <summary>
+    /// Called when Pate hits the screen left side trigger
+    /// </summary>
     void LeftExitTrigger()
     {
         StartTransition(current_location.GetLeftExit());
     }
 
+    /// <summary>
+    /// Called when Pate hits the screen right side trigger
+    /// </summary>
     void RightExitTrigger()
     {
         StartTransition(current_location.GetRightExit());
