@@ -141,13 +141,16 @@ public class EscapeController : MonoBehaviour
         if (metro2.position.x < -450.0f)
             metro2.position = new Vector2(750.0f, 58.0f);
 
+        // inspector AI
         if (inspector_jump_cooldown_timer <= 0.0f && !gameover)
         {
-            if (metro1.position.x < -200.0f ||
-                metro2.position.x < -200.0f)
-            {
-                Debug.Log("Inspector trig: m1=" + metro1.position.x + ", m2=" + metro2.position.x);
+            BoxCollider2D insbox = inspector.GetComponent<BoxCollider2D>();
+            BoxCollider2D metro1_box = metro1.GetComponent<BoxCollider2D>();
+            BoxCollider2D metro2_box = metro2.GetComponent<BoxCollider2D>();
 
+            if (Mathf.Abs(metro1_box.bounds.max.x - insbox.bounds.max.x) < 1.0f ||
+                Mathf.Abs(metro2_box.bounds.max.x - insbox.bounds.max.x) < 1.0f)
+            {
                 inspector_jump_cooldown_timer = inspector_animation_duration;
                 inspector_animation_timer = inspector_animation_duration;
             }
@@ -157,7 +160,10 @@ public class EscapeController : MonoBehaviour
         float sway_anim_angle = (total_timer / 1.4f) * 180.0f / Mathf.PI;
         if (Mathf.Abs(pate_physics.velocity.y) < 0.5f)
         {
-            pate_sprite.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Cos(sway_anim_angle) * 20.0f));
+            float pate_angle = sway_anim_angle;
+            if (gameover)
+                pate_angle = 0;
+            pate_sprite.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Cos(pate_angle) * 20.0f));
         }
 
         float inspector_jump_offset = 0.0f;
