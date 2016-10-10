@@ -102,6 +102,7 @@ public class EscapeController : MonoBehaviour
             inspector_animation_duration /= 1.4f;
         }
 
+        // count down the gameover timer and go to gameover if expired
         if (gameover_timer > 0.0f)
         {
             gameover_timer -= Time.deltaTime;
@@ -111,27 +112,32 @@ public class EscapeController : MonoBehaviour
             }
         }
 
+        // spin Pate if we're spinning
         if (spin)
         {
             spin_timer += Time.deltaTime;
             pate_sprite.transform.rotation = Quaternion.Euler(0, 0, spin_timer * 360.0f);
         }
 
+        // format the escape timer text
         timer_text.text = string.Format("Aika pakoon: {0:0.00}s", 60.0f - total_timer);
 
         float color_fade = Mathf.Abs(Mathf.Cos((total_timer / 10.0f) * 180.0f / Mathf.PI));
         timer_text.color = new Color(1.0f, color_fade, 0.0f);
-
+        
+        // we win if 60 seconds have passed
         if (total_timer >= 60.0f && !gameover)
         {
             SceneManager.LoadScene("winscreen");
         }
 
+        // reduce inspector jump cooldown
         if (inspector_jump_cooldown_timer > 0.0f)
         {
             inspector_jump_cooldown_timer -= Time.deltaTime;
         }
 
+        // move lamp and metro cars back to start after they are off the screen
         if (lamp1.position.x < -400.0f)
         {
             lamp1.position = new Vector2(460.0f, 204.0f);
@@ -156,7 +162,7 @@ public class EscapeController : MonoBehaviour
             }
         }
 
-
+        // calculate sway animation for Pate
         float sway_anim_angle = (total_timer / 1.4f) * 180.0f / Mathf.PI;
         if (Mathf.Abs(pate_physics.velocity.y) < 0.5f)
         {
@@ -166,6 +172,7 @@ public class EscapeController : MonoBehaviour
             pate_sprite.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Cos(pate_angle) * 20.0f));
         }
 
+        // update inspector position if we're currently animating the jump
         float inspector_jump_offset = 0.0f;
         if (inspector_animation_timer > 0.0f)
         {
@@ -177,6 +184,7 @@ public class EscapeController : MonoBehaviour
 
         inspector.transform.position = inspector_base_position + new Vector2(0, inspector_jump_offset);
 
+        // calculate sway animation for inspector if he's not jumping (and not game over)
         if (inspector_animation_timer <= 0.0f && !gameover)
         {
             inspector.transform.localRotation = Quaternion.Euler(0, 0, Mathf.Cos(sway_anim_angle) * 20.0f);
@@ -216,6 +224,8 @@ public class EscapeController : MonoBehaviour
     {
         if (collider == "FloorCollider")
         {
+            // spawn blood if we hit the floor
+
             Vector3 blood_pos = blood.transform.position;
             Vector3 pate_pos = pate.transform.position;
             blood.transform.position = new Vector3(pate_pos.x, blood_pos.y, blood_pos.z);
@@ -228,6 +238,7 @@ public class EscapeController : MonoBehaviour
         }
         else
         {
+            // start spinning if we hit any other trigger (= inspector)
             spin = true;
             gameover_timer = 1.5f;
             gameover = true;
