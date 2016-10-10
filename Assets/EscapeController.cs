@@ -177,6 +177,13 @@ public class EscapeController : MonoBehaviour
         }
 
         inspector.transform.position = inspector_base_position + new Vector2(0, inspector_jump_offset);
+
+        /*
+        if (Mathf.Abs(pate_physics.velocity.y) < 0.5f)
+        {
+            Vector3 pate_pos = pate_physics.transform.position;
+            pate_sprite.transform.position = pate_pos + new Vector3(0, Mathf.Abs(Mathf.Sin((total_timer / 6.0f) * 180.0f / Mathf.PI)) * 20.0f, 0);
+        }*/
 	}
 
     void JumpButtonClicked()
@@ -201,12 +208,23 @@ public class EscapeController : MonoBehaviour
             blood.SetActive(true);
             gameover_timer = 1.5f;
             gameover = true;
+
+            StopGame();
         }
         else
         {
             spin = true;
             gameover_timer = 1.5f;
             gameover = true;
+
+            StopGame();
         }
+    }
+
+    void StopGame()
+    {
+        metro1.velocity = new Vector3();
+        metro2.velocity = new Vector3();
+        lamp1.velocity = new Vector3();
     }
 }

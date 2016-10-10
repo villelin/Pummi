@@ -1,18 +1,18 @@
 fileFormatVersion: 2
-guid: 728257d4535540545ac852567284181d
-timeCreated: 1475824003
+guid: e2d40389b7d042e48abe5fa338170f4b
+timeCreated: 1476084909
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: veri_0
-    21300002: veri_1
-    21300004: veri_2
-    21300006: veri_3
-    21300008: veri_4
-    21300010: veri_5
-    21300012: veri_6
-    21300014: veri_7
-    21300016: veri_8
+    21300000: veri2_0
+    21300002: veri2_1
+    21300004: veri2_2
+    21300006: veri2_3
+    21300008: veri2_4
+    21300010: veri2_5
+    21300012: veri2_6
+    21300014: veri2_7
+    21300016: veri2_8
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -62,7 +62,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: veri_0
+      name: veri2_0
       rect:
         serializedVersion: 2
         x: 0
@@ -75,7 +75,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: veri_1
+      name: veri2_1
       rect:
         serializedVersion: 2
         x: 200
@@ -88,7 +88,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: veri_2
+      name: veri2_2
       rect:
         serializedVersion: 2
         x: 400
@@ -101,7 +101,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: veri_3
+      name: veri2_3
       rect:
         serializedVersion: 2
         x: 600
@@ -114,7 +114,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: veri_4
+      name: veri2_4
       rect:
         serializedVersion: 2
         x: 800
@@ -127,7 +127,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: veri_5
+      name: veri2_5
       rect:
         serializedVersion: 2
         x: 1000
@@ -140,7 +140,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: veri_6
+      name: veri2_6
       rect:
         serializedVersion: 2
         x: 1200
@@ -153,7 +153,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: veri_7
+      name: veri2_7
       rect:
         serializedVersion: 2
         x: 1400
@@ -166,7 +166,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: veri_8
+      name: veri2_8
       rect:
         serializedVersion: 2
         x: 1600
