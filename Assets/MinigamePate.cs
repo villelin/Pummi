@@ -6,7 +6,6 @@ public class MinigamePate : MonoBehaviour {
 
     GameObject blood;
     GameObject pate;
-    float gameover_timer;
 
     void Start()
     {
@@ -14,20 +13,11 @@ public class MinigamePate : MonoBehaviour {
         blood.SetActive(false);
 
         pate = GameObject.Find("Ball");
-
-        gameover_timer = 0.0f;
     }
 
     void Update()
     {
-        if (gameover_timer > 0.0f)
-        {
-            gameover_timer -= Time.deltaTime;
-            if (gameover_timer <= 0.0f)
-            {
-                SceneManager.LoadScene("gameover");
-            }
-        }
+
     }
 
 	void OnCollisionEnter2D(Collision2D col) {
@@ -45,7 +35,7 @@ public class MinigamePate : MonoBehaviour {
         else if (col.name == "GameoverTrigger")
         {
             // go to gameover screen after 1.5 seconds
-            gameover_timer = 1.5f;
+            pate.SendMessage("Crash");
 
             // show the blood in the position where Pate fell down
             blood.SetActive(true);
@@ -53,8 +43,6 @@ public class MinigamePate : MonoBehaviour {
             Vector3 blood_pos = blood.transform.position;
             Vector3 pate_pos = pate.transform.position;
             blood.transform.position = new Vector3(pate_pos.x, blood_pos.y, blood_pos.z);
-
-            //blood.GetComponent<Animator>().StartPlayback();
         }
         else if (col.name == "es")
         {

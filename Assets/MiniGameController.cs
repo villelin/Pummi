@@ -13,7 +13,8 @@ public class MiniGameController : MonoBehaviour {
 	GameObject ball;
 
     Text timer_text;
-
+    float gameover_timer;
+    bool gameover;
 
     private float timer;
 
@@ -28,6 +29,8 @@ public class MiniGameController : MonoBehaviour {
         timer_text = GameObject.Find("TimerText").GetComponent<Text>();
 
         timer = 15.0f;
+        gameover_timer = 0.0f;
+        gameover = false;
 
         GameObject.Find("Music").GetComponent<AudioSource>().Play();
 	}
@@ -35,7 +38,18 @@ public class MiniGameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        timer -= Time.deltaTime;
+        if (!gameover)
+        {
+            timer -= Time.deltaTime;
+        } 
+        else
+        {
+            gameover_timer -= Time.deltaTime;
+            if (gameover_timer <= 0.0f)
+            {
+                SceneManager.LoadScene("gameover");
+            }
+        }
 
         timer_text.text = string.Format("Aikaa jäljellä: {0:0.00s}", Mathf.Max(timer, 0.0f));
 
@@ -58,4 +72,10 @@ public class MiniGameController : MonoBehaviour {
 			ball.transform.Translate (0.1f,0,0);    
 		}
 	}
+
+    void Crash()
+    {
+        gameover = true;
+        gameover_timer = 1.5f;
+    }
 }
