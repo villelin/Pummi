@@ -167,6 +167,13 @@ public class EscapeController : MonoBehaviour
             }
         }
 
+
+        float sway_anim_angle = (total_timer / 1.1f) * 180.0f / Mathf.PI;
+        if (Mathf.Abs(pate_physics.velocity.y) < 0.5f)
+        {
+            pate_sprite.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Cos(sway_anim_angle) * 20.0f));
+        }
+
         float inspector_jump_offset = 0.0f;
         if (inspector_animation_timer > 0.0f)
         {
@@ -178,12 +185,18 @@ public class EscapeController : MonoBehaviour
 
         inspector.transform.position = inspector_base_position + new Vector2(0, inspector_jump_offset);
 
+        if (inspector_animation_timer <= 0.0f)
+        {
+            inspector.transform.localRotation = Quaternion.Euler(0, 0, Mathf.Cos(sway_anim_angle) * 20.0f);
+        }
+
         /*
         if (Mathf.Abs(pate_physics.velocity.y) < 0.5f)
         {
             Vector3 pate_pos = pate_physics.transform.position;
             pate_sprite.transform.position = pate_pos + new Vector3(0, Mathf.Abs(Mathf.Sin((total_timer / 6.0f) * 180.0f / Mathf.PI)) * 20.0f, 0);
         }*/
+
 	}
 
     /// <summary>
