@@ -18,11 +18,10 @@ public class EscapeController : MonoBehaviour
     const float pate_xleft = -500.0f;
     const float pate_xright = 600.0f;
 
-    float jump_cooldown_timer;
-    float jump_cooldown_duration;
     float inspector_jump_cooldown_timer;
     float inspector_animation_timer;
     float inspector_animation_duration;
+    const float inspector_jump_height = 80.0f;
 
     Rigidbody2D lamp1;
     Rigidbody2D metro1;
@@ -70,9 +69,6 @@ public class EscapeController : MonoBehaviour
         blood = GameObject.Find("Blood");
         blood.SetActive(false);
 
-        jump_cooldown_timer = 0;
-        jump_cooldown_duration = 5.0f;
-
         inspector_jump_cooldown_timer = 0;
         inspector_animation_timer = 0;
         inspector_animation_duration = 5.0f;
@@ -104,8 +100,6 @@ public class EscapeController : MonoBehaviour
             metro2.velocity *= 1.4f;
 
             inspector_animation_duration /= 1.4f;
-
-            jump_cooldown_duration /= 1.4f;
         }
 
         if (gameover_timer > 0.0f)
@@ -132,16 +126,6 @@ public class EscapeController : MonoBehaviour
         {
             SceneManager.LoadScene("winscreen");
         }
-        
-        if (jump_cooldown_timer > 0.0f)
-        {
-            jump_cooldown_timer -= Time.deltaTime;
-
-            if (jump_cooldown_timer <= 0.0f)
-            {
-                jump_button.image.color = new Color32(255, 64, 64, 255);
-            }
-        }
 
         if (inspector_jump_cooldown_timer > 0.0f)
         {
@@ -157,18 +141,20 @@ public class EscapeController : MonoBehaviour
         if (metro2.position.x < -450.0f)
             metro2.position = new Vector2(750.0f, 58.0f);
 
-        if (inspector_jump_cooldown_timer <= 0.0f)
+        if (inspector_jump_cooldown_timer <= 0.0f && !gameover)
         {
             if (metro1.position.x < -200.0f ||
                 metro2.position.x < -200.0f)
             {
+                Debug.Log("Inspector trig: m1=" + metro1.position.x + ", m2=" + metro2.position.x);
+
                 inspector_jump_cooldown_timer = inspector_animation_duration;
                 inspector_animation_timer = inspector_animation_duration;
             }
         }
 
 
-        float sway_anim_angle = (total_timer / 1.1f) * 180.0f / Mathf.PI;
+        float sway_anim_angle = (total_timer / 1.4f) * 180.0f / Mathf.PI;
         if (Mathf.Abs(pate_physics.velocity.y) < 0.5f)
         {
             pate_sprite.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Cos(sway_anim_angle) * 20.0f));
@@ -180,14 +166,18 @@ public class EscapeController : MonoBehaviour
             inspector_animation_timer -= Time.deltaTime;
 
             float angle = (inspector_animation_timer / inspector_animation_duration) * 180.0f;
-            inspector_jump_offset = Mathf.Sin(angle * Mathf.Deg2Rad) * 100.0f;
+            inspector_jump_offset = Mathf.Sin(angle * Mathf.Deg2Rad) * inspector_jump_height;
         }
 
         inspector.transform.position = inspector_base_position + new Vector2(0, inspector_jump_offset);
 
-        if (inspector_animation_timer <= 0.0f)
+        if (inspector_animation_timer <= 0.0f && !gameover)
         {
             inspector.transform.localRotation = Quaternion.Euler(0, 0, Mathf.Cos(sway_anim_angle) * 20.0f);
+        }
+        else
+        {
+            inspector.transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
 
         /*
@@ -204,12 +194,11 @@ public class EscapeController : MonoBehaviour
     /// </summary>
     void JumpButtonClicked()
     {
-        if (jump_cooldown_timer <= 0.0f)
+        float pate_velocity = Mathf.Abs(pate_physics.velocity.y);
+
+        if (pate_velocity < 0.5f)
         {
             pate_physics.AddForce(new Vector2(0, 200.0f), ForceMode2D.Impulse);
-            jump_cooldown_timer = jump_cooldown_duration;
-
-            jump_button.image.color = new Color32(160, 160, 160, 255);
         }
     }
 
