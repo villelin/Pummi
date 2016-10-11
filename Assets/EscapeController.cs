@@ -189,7 +189,7 @@ public class EscapeController : MonoBehaviour
         // calculate sway animation for inspector if he's not jumping (and not game over)
         if (inspector_animation_timer <= 0.0f && !gameover)
         {
-            inspector.transform.localRotation = Quaternion.Euler(0, 0, Mathf.Cos(sway_anim_angle) * 20.0f);
+            inspector.transform.localRotation = Quaternion.Euler(0, 0, Mathf.Cos(sway_anim_angle) * 10.0f);
         }
         else
         {

@@ -36,6 +36,7 @@ public class GameController : MonoBehaviour
 
         item_map = new Dictionary<GameObject, IInteractiveObject>();
 
+        // map IInteractiveObjects to GameObjects in the scene
         item_map.Add(GameObject.Find("Andrei"), Persistence.instance.iobjects["Andrei"]);
         item_map.Add(GameObject.Find("Lissu"), Persistence.instance.iobjects["Lissu"]);
         item_map.Add(GameObject.Find("Martta"), Persistence.instance.iobjects["Martta"]);
@@ -69,6 +70,7 @@ public class GameController : MonoBehaviour
 
         UpdateCash();
 
+        // set up UI buttons
         Text speechtext = GameObject.Find("SpeechText").GetComponent<Text>();
         speechtext.text = "STEAL!";
 
@@ -101,6 +103,7 @@ public class GameController : MonoBehaviour
     /// <param name="new_location">Location to change to</param>
 	void ChangeLocation(Location new_location)
 	{
+        // set background music for the Location
         if (current_location != new_location)
         {
             if (new_location.GetBackground() == 0)
@@ -117,6 +120,7 @@ public class GameController : MonoBehaviour
 
         current_location = new_location;
 
+        // set background image for the Location
         if (current_location.GetBackground() == 0)
         {
             parkbg.SetActive(false);
@@ -135,10 +139,11 @@ public class GameController : MonoBehaviour
             go.SetActive(false);
         }
 
-        // show objects based on location
+        // if the item exists in the Location, show it
         List<IInteractiveObject> objlist = current_location.GetObjects();
         foreach (IInteractiveObject obj in objlist)
         {
+            // find the GameObject for this IInteractiveObject
             foreach (KeyValuePair<GameObject, IInteractiveObject> item_pair in item_map)
             {
                 if (item_pair.Value == obj)
@@ -162,17 +167,17 @@ public class GameController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-
-
-
         time += Time.deltaTime;
 
+        // update transition in timer, if it's active
         if (transition_in_timer > 0)
         {
             transition_in_timer -= Time.deltaTime;
 
+            // check if transition in timer has expired
             if (transition_in_timer <= 0.0f)
             {
+                // change location and start fade in
                 ChangeLocation(transition_target);
                 transition_out_timer = 1.0f;
 
@@ -182,6 +187,8 @@ public class GameController : MonoBehaviour
 
             fade_level = Mathf.Max(1.0f - transition_in_timer, 0.0f);
         }
+
+        // update transition out timer, if it's active
         if (transition_out_timer > 0)
         {
             transition_out_timer -= Time.deltaTime;
@@ -192,6 +199,7 @@ public class GameController : MonoBehaviour
             fade_level = Mathf.Min(transition_out_timer, 1.0f);
         }
 
+        // update inputs if we're currently not transitioning to another Location
         if (!transition_active)
         {
             // if mouse was clicked, set a target position for Pate
@@ -224,7 +232,7 @@ public class GameController : MonoBehaviour
                     Vector3 diff = gopos - patepos;
                     InteractType type = iobj.GetInteractType();
 
-                    // loot if we're close enough
+                    // show speech bubble if we're close enough
                     if (iobj.GetInteractType() != InteractType.None && diff.magnitude < 50.0f)
                     {
                         speech.transform.position = Camera.main.WorldToScreenPoint(go.transform.position) - new Vector3(0, -60, 0) ;
@@ -232,6 +240,7 @@ public class GameController : MonoBehaviour
 
                         Text speech_text = GameObject.Find("SpeechText").GetComponent<Text>();
 
+                        // show speech bubble text based on the interaction type
                         switch (type)
                         {
                             case InteractType.Lootable:
@@ -283,6 +292,7 @@ public class GameController : MonoBehaviour
 
             item.Interact(0);
 
+            // handle different types of interaction
             switch (type)
             {
                 case InteractType.Lootable:
@@ -301,9 +311,10 @@ public class GameController : MonoBehaviour
 
                 case InteractType.NPC:
                     {
+                        // set this NPC as the conversation target in the conversation scene
                         Persistence.instance.conversation_target = (NPC)item;
 
-                        // talk
+                        // go to conversation scene
                         SaveGlobalState();
                         SceneManager.LoadScene("conversation");
                         break;
@@ -320,7 +331,7 @@ public class GameController : MonoBehaviour
                         }
 
                         int inspector_chance = 10;
-                        if (Persistence.instance.player.HasESBuff())
+                        if (Persistence.instance.player.HasESBuff())        // 20% chance with ES buff
                             inspector_chance = 20;
 
 			            if ((inspector_rng < inspector_chance) || Persistence.instance.player.GetCash() >= 5.0)
@@ -341,6 +352,7 @@ public class GameController : MonoBehaviour
 
                 case InteractType.Bush:
                     {
+                        // spawn bottles when interacting with bush
                         ((Bottle)Persistence.instance.iobjects["Bottle1"]).SetVisible(true);
                         ((Bottle)Persistence.instance.iobjects["Bottle2"]).SetVisible(true);
                         ((Bottle)Persistence.instance.iobjects["Bottle3"]).SetVisible(true);
@@ -351,6 +363,7 @@ public class GameController : MonoBehaviour
 
                 case InteractType.ES:
                     {
+                        // go to ES mini game
                         SaveGlobalState();
                         SceneManager.LoadScene("kallioquest");
                         break;
@@ -395,6 +408,7 @@ public class GameController : MonoBehaviour
 
     void OnGUI()
     {
+        // draw a black rectangle for the fade in/out effect
         GUI.color = new Color(0, 0, 0, fade_level);
         GUI.depth = -1000;
         GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Texture2D.whiteTexture);
