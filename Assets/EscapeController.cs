@@ -28,6 +28,8 @@ public class EscapeController : MonoBehaviour
     Rigidbody2D metro2;
 
     GameObject blood;
+    GameObject random_andrei1;
+    GameObject random_andrei2;
 
     Vector2 inspector_base_position = new Vector2(4, 181);
 
@@ -68,6 +70,12 @@ public class EscapeController : MonoBehaviour
 
         blood = GameObject.Find("Blood");
         blood.SetActive(false);
+
+        random_andrei1 = GameObject.Find("RandomAndrei1");
+        random_andrei1.SetActive(false);
+
+        random_andrei2 = GameObject.Find("RandomAndrei2");
+        random_andrei2.SetActive(false);
 
         inspector_jump_cooldown_timer = 0;
         inspector_animation_timer = 0;
@@ -145,9 +153,17 @@ public class EscapeController : MonoBehaviour
             lamp1.position = new Vector2(460.0f, 204.0f);
         }
         if (metro1.position.x < -450.0f)
+        {
             metro1.position = new Vector2(750.0f, 58.0f);
+            // randomly spawn Andrei in metro 1
+            random_andrei1.SetActive(Random.Range(0, 100) < 25);
+        }
         if (metro2.position.x < -450.0f)
+        {
             metro2.position = new Vector2(750.0f, 58.0f);
+            // randomly spawn Andrei in metro 2
+            random_andrei2.SetActive(Random.Range(0, 100) < 25);
+        }
 
         // inspector AI
         if (inspector_jump_cooldown_timer <= 0.0f && !gameover)
