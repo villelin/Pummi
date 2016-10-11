@@ -3,6 +3,7 @@ Temp/
 pummi_Data/
 
 *.exe
+*.apk
 
 # Visual Studion kamat
 *.sln
