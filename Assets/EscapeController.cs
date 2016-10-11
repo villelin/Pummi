@@ -87,7 +87,9 @@ public class EscapeController : MonoBehaviour
 	void Update ()
     {
         minigame_timer += Time.deltaTime;
-        total_timer += Time.deltaTime;
+
+        if (!gameover)
+            total_timer += Time.deltaTime;
 
         // speed increases by 40% every 15 seconds
         if (minigame_timer >= 15.0f)
